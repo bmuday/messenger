@@ -10,7 +10,7 @@ export function roomUrlFromPageUrl() {
   return match && match[1] ? decodeURIComponent(match[1]) : null;
 }
 
-export function pageUrlFromRoomUrl(roomUrl) {
+export function pageUrlFromRoomUrl(roomUrl: any) {
   return (
     window.location.href.split("?")[0] +
     (roomUrl ? `?roomUrl=${encodeURIComponent(roomUrl)}` : "")

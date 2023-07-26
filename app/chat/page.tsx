@@ -23,10 +23,10 @@ const STATE_ERROR = "STATE_ERROR";
 const STATE_HAIRCHECK = "STATE_HAIRCHECK";
 
 export default function App() {
-  const [appState, setAppState] = useState(STATE_IDLE);
-  const [roomUrl, setRoomUrl] = useState(null);
-  const [callObject, setCallObject] = useState(null);
-  const [apiError, setApiError] = useState(false);
+  const [appState, setAppState] = useState<any>(STATE_IDLE);
+  const [roomUrl, setRoomUrl] = useState<any>(null);
+  const [callObject, setCallObject] = useState<any>(null);
+  const [apiError, setApiError] = useState<any>(false);
 
   /**
    * Create a new call room. This function will return the newly created room URL.
@@ -49,7 +49,7 @@ export default function App() {
   /**
    * We've created a room, so let's start the hair check. We won't be joining the call yet.
    */
-  const startHairCheck = useCallback(async (url) => {
+  const startHairCheck = useCallback(async (url: any) => {
     const newCallObject = DailyIframe.createCallObject();
     setRoomUrl(url);
     setCallObject(newCallObject);
@@ -102,7 +102,7 @@ export default function App() {
   useEffect(() => {
     const pageUrl = pageUrlFromRoomUrl(roomUrl);
     if (pageUrl === window.location.href) return;
-    window.history.replaceState(null, null, pageUrl);
+    window.history.replaceState(null, "", pageUrl);
   }, [roomUrl]);
 
   /**
