@@ -2,12 +2,12 @@ import { apiURL } from "../app/directus";
 import Image from "next/image";
 
 export default function Post(post: any) {
-  const { title, text, image } = post;
+  // const { title, text, image } = post;
   return (
     <div>
-      <h2>{title}</h2>
+      {/* <h2>{title}</h2>
       <p>{text}</p>
-      <Image src={`${apiURL}/assets/${image}`} alt={title} />
+      <Image src={`${apiURL}/assets/${image}`} alt={title} /> */}
     </div>
   );
 }
