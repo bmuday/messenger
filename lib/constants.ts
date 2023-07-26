@@ -1,6 +1,6 @@
 export const headerLinks = [
-  { label: "Salons", url: "/salons" },
-  { label: "Membres", url: "/membres" },
+  { label: "Rooms", url: "/rooms" },
+  { label: "Members", url: "/members" },
   { label: "Blog", url: "/blog" },
 ];
 

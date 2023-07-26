@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export default function avatar() {
+  const isPremium = false;
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -17,9 +18,10 @@ export default function avatar() {
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem>Profile</DropdownMenuItem>
-        <DropdownMenuItem>Billing</DropdownMenuItem>
-        <DropdownMenuItem>Team</DropdownMenuItem>
-        <DropdownMenuItem>Subscription</DropdownMenuItem>
+        <DropdownMenuItem>
+          {isPremium ? "Billing" : "Become Premium!"}
+        </DropdownMenuItem>
+        <DropdownMenuItem>Logout</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
