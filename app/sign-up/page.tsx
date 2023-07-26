@@ -71,7 +71,7 @@ export default function page() {
         </button>
       </div>
       <p className="text-xs text-center text-gray-600 sm:px-6">
-        Don't have an account?
+        Dont have an account?
         <a
           rel="noopener noreferrer"
           href="#"
