@@ -1,7 +1,7 @@
 import { apiURL } from "../app/directus";
 import Image from "next/image";
 
-export default function Post({ post }) {
+export default function Post(post: any) {
   const { title, text, image } = post;
   return (
     <div>
