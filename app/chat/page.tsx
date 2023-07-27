@@ -36,7 +36,10 @@ export default function App() {
     setAppState(STATE_CREATING);
     return api
       .createRoom()
-      .then((room) => room.url)
+      .then((room) => {
+        console.log("url", room.url);
+        setRoomUrl(room.url);
+      })
       .catch((error) => {
         console.error("Error creating room", error);
         setRoomUrl(null);
