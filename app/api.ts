@@ -5,7 +5,8 @@
 async function createRoom() {
   const response = await fetch(`${window.location.origin}/api/rooms`);
 
-  return response.json();
+  return response;
+  console.log("response", response);
 }
 
 export default { createRoom };

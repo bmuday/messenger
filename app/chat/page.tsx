@@ -38,7 +38,7 @@ export default function App() {
       .createRoom()
       .then((room) => {
         console.log("url", room.url);
-        setRoomUrl(room.url);
+        return room.url;
       })
       .catch((error) => {
         console.error("Error creating room", error);
