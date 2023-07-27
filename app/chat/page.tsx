@@ -9,7 +9,6 @@ import { roomUrlFromPageUrl, pageUrlFromRoomUrl } from "@/lib/utils";
 
 import HomeScreen from "../../components/HomeScreen/HomeScreen";
 import Call from "../../components/Call/Call";
-import Header from "../../components/Header/Header";
 import Tray from "../../components/Tray/Tray";
 import HairCheck from "../../components/HairCheck/HairCheck";
 
@@ -91,6 +90,7 @@ export default function App() {
    */
   useEffect(() => {
     const url = roomUrlFromPageUrl();
+    console.log("url", url);
     if (url) {
       startHairCheck(url);
     }
@@ -209,10 +209,5 @@ export default function App() {
     );
   };
 
-  return (
-    <div className="app">
-      <Header />
-      {renderApp()}
-    </div>
-  );
+  return <div className="app">{renderApp()}</div>;
 }
