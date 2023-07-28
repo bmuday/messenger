@@ -167,6 +167,7 @@ export default function Home() {
   const renderApp = () => {
     // If something goes wrong with creating the room.
     if (apiError) {
+      console.log("apiError");
       return (
         <div className="api-error">
           <h1>Error</h1>

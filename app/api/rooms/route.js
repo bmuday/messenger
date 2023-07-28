@@ -1,10 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export async function GET() {
   const exp = Math.round(Date.now() / 1000) + 60 * 30;
   const options = {
     properties: {
-      exp,
+      exp: 2690553345,
     },
   };
 
@@ -13,16 +13,22 @@ export async function GET() {
         netlify.toml takes care of that for us.
       */
 
-  const res = await fetch("https://api.daily.co/v1/rooms/", {
-    method: "POST",
-    body: JSON.stringify(options),
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.NEXT_DAILY_API_KEY}`,
-    },
-  });
-  const data = await res.json();
-  console.log("data", data);
+  try {
+    const res = await fetch("https://api.daily.co/v1/rooms/", {
+      method: "POST",
+      body: JSON.stringify(options),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.NEXT_DAILY_API_KEY}`,
+      },
+    });
+    const data = await res.json();
+    console.log("data", data);
 
-  return NextResponse.json({ data });
+    const room = NextResponse.json(data);
+    console.log("room", room);
+    return room;
+  } catch (error) {
+    console.log("error", error);
+  }
 }

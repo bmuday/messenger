@@ -1,3 +1,4 @@
+import { footerLinks } from "@/lib/constants";
 import React from "react";
 
 export default function footer() {
@@ -16,16 +17,17 @@ export default function footer() {
             </svg>
           </div>
           <ul className="flex flex-wrap items-center space-x-4 sm:space-x-8">
-            <li>
-              <a rel="noopener noreferrer" href="#">
-                Terms of Use
-              </a>
-            </li>
-            <li>
-              <a rel="noopener noreferrer" href="#">
-                Legal
-              </a>
-            </li>
+            {footerLinks.map((link, index) => (
+              <li key={index} className="flex">
+                <a
+                  rel="noopener noreferrer"
+                  href={link.url}
+                  className="flex items-center px-4 -mb-1 border-b-2 border-transparent"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
         <ul className="flex flex-wrap pl-3 space-x-4 sm:space-x-8">
