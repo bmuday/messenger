@@ -1,13 +1,13 @@
-import { useCallback, useState } from 'react';
-import { useAppMessage, useLocalParticipant } from '@daily-co/daily-react';
+import { useCallback, useState } from "react";
+import { useAppMessage, useLocalParticipant } from "@daily-co/daily-react";
 
-import { Arrow } from '../Tray/Icons/index';
-import './Chat.css';
+import { Arrow } from "../Tray/Icons/index";
+import "./Chat.css";
 
 export default function Chat({ showChat, toggleChat }) {
   const localParticipant = useLocalParticipant();
   const [messages, setMessages] = useState([]);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
 
   const sendAppMessage = useAppMessage({
     onAppMessage: useCallback(
@@ -19,7 +19,7 @@ export default function Chat({ showChat, toggleChat }) {
             name: ev.data.name,
           },
         ]),
-      [],
+      []
     ),
   });
 
@@ -31,9 +31,10 @@ export default function Chat({ showChat, toggleChat }) {
       sendAppMessage(
         {
           msg: message,
-          name: localParticipant?.user_name || 'Guest',
+          image: "image",
+          name: localParticipant?.user_name || "Guest",
         },
-        '*',
+        "*"
       );
 
       /* Since we don't receive our own messages, we will set our message in the messages array.
@@ -43,11 +44,12 @@ export default function Chat({ showChat, toggleChat }) {
         ...messages,
         {
           msg: message,
-          name: localParticipant?.user_name || 'Guest',
+          image: "image",
+          name: localParticipant?.user_name || "Guest",
         },
       ]);
     },
-    [localParticipant, messages, sendAppMessage],
+    [localParticipant, messages, sendAppMessage]
   );
 
   const onChange = (e) => {
@@ -58,8 +60,10 @@ export default function Chat({ showChat, toggleChat }) {
     e.preventDefault();
     if (!inputValue) return; // don't allow people to submit empty strings
     sendMessage(inputValue);
-    setInputValue('');
+    setInputValue("");
   };
+
+  console.log("messages", messages);
 
   return showChat ? (
     <aside className="chat">
@@ -69,7 +73,7 @@ export default function Chat({ showChat, toggleChat }) {
       <ul className="chat-messages">
         {messages?.map((message, index) => (
           <li key={`message-${index}`} className="chat-message">
-            <span className="chat-message-author">{message?.name}</span>:{' '}
+            <span className="chat-message-author">{message?.name}</span>:{" "}
             <p className="chat-message-body">{message?.msg}</p>
           </li>
         ))}
