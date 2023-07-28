@@ -1,27 +1,34 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState } from "react";
 import {
   useLocalParticipant,
   useDevices,
   useDaily,
   useDailyEvent,
   DailyVideo,
-} from '@daily-co/daily-react';
-import UserMediaError from '../UserMediaError/UserMediaError';
+} from "@daily-co/daily-react";
+import UserMediaError from "../UserMediaError/UserMediaError";
 
-import './HairCheck.css';
+import "./Settings.css";
 
-export default function HairCheck({ joinCall, cancelCall }) {
+export default function SettingsCheck({ joinCall, cancelCall }) {
   const localParticipant = useLocalParticipant();
-  const { microphones, speakers, cameras, setMicrophone, setCamera, setSpeaker } = useDevices();
+  const {
+    microphones,
+    speakers,
+    cameras,
+    setMicrophone,
+    setCamera,
+    setSpeaker,
+  } = useDevices();
   const callObject = useDaily();
 
   const [getUserMediaError, setGetUserMediaError] = useState(false);
 
   useDailyEvent(
-    'camera-error',
+    "camera-error",
     useCallback(() => {
       setGetUserMediaError(true);
-    }, []),
+    }, [])
   );
 
   const onChange = (e) => {
@@ -48,10 +55,12 @@ export default function HairCheck({ joinCall, cancelCall }) {
   return getUserMediaError ? (
     <UserMediaError />
   ) : (
-    <form className="hair-check" onSubmit={join}>
+    <form className="settings-check" onSubmit={join}>
       <h1>Setup your hardware</h1>
       {/* Video preview */}
-      {localParticipant && <DailyVideo sessionId={localParticipant.session_id} mirror />}
+      {localParticipant && (
+        <DailyVideo sessionId={localParticipant.session_id} mirror />
+      )}
 
       {/* Username */}
       <div>
@@ -61,7 +70,7 @@ export default function HairCheck({ joinCall, cancelCall }) {
           type="text"
           placeholder="Enter username"
           onChange={(e) => onChange(e)}
-          value={localParticipant?.user_name || ' '}
+          value={localParticipant?.user_name || " "}
         />
       </div>
 
@@ -70,7 +79,10 @@ export default function HairCheck({ joinCall, cancelCall }) {
         <label htmlFor="micOptions">Microphone:</label>
         <select name="micOptions" id="micSelect" onChange={updateMicrophone}>
           {microphones?.map((mic) => (
-            <option key={`mic-${mic.device.deviceId}`} value={mic.device.deviceId}>
+            <option
+              key={`mic-${mic.device.deviceId}`}
+              value={mic.device.deviceId}
+            >
               {mic.device.label}
             </option>
           ))}
@@ -80,9 +92,16 @@ export default function HairCheck({ joinCall, cancelCall }) {
       {/* Speakers select */}
       <div>
         <label htmlFor="speakersOptions">Speakers:</label>
-        <select name="speakersOptions" id="speakersSelect" onChange={updateSpeakers}>
+        <select
+          name="speakersOptions"
+          id="speakersSelect"
+          onChange={updateSpeakers}
+        >
           {speakers?.map((speaker) => (
-            <option key={`speaker-${speaker.device.deviceId}`} value={speaker.device.deviceId}>
+            <option
+              key={`speaker-${speaker.device.deviceId}`}
+              value={speaker.device.deviceId}
+            >
               {speaker.device.label}
             </option>
           ))}
@@ -94,7 +113,10 @@ export default function HairCheck({ joinCall, cancelCall }) {
         <label htmlFor="cameraOptions">Camera:</label>
         <select name="cameraOptions" id="cameraSelect" onChange={updateCamera}>
           {cameras?.map((camera) => (
-            <option key={`cam-${camera.device.deviceId}`} value={camera.device.deviceId}>
+            <option
+              key={`cam-${camera.device.deviceId}`}
+              value={camera.device.deviceId}
+            >
               {camera.device.label}
             </option>
           ))}

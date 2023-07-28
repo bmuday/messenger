@@ -1,12 +1,11 @@
-export const members = [
+const members = [
   {
-    clerkId: "user_2SqLH",
+    id: "2SqLH",
     firstName: "Samantha",
     lastName: "Altman",
     email: "samantha_altman@gmail.com",
     profilePicture: "",
     online: "GET /session (status: active)",
-    id: "zfafafz",
     city: "",
     country: "",
     subscription: "standard | vip | premium",
@@ -14,13 +13,12 @@ export const members = [
     roomId: "room_2SqLH",
   },
   {
-    clerkId: "user_jMwNQ",
+    id: "jMwNQ",
     firstName: "Clara",
     lastName: "Hilfilgher",
     email: "clara_hilfilgher@gmail.com",
     profilePicture: "",
     online: "GET /session (status: active)",
-    id: "zfafafz",
     age: 34,
     city: "",
     country: "",
@@ -29,14 +27,13 @@ export const members = [
     roomId: "room_1EfPc",
   },
   {
-    clerkId: "user_Fjtt4",
+    id: "Fjtt4",
     firstName: "Baptiste",
     lastName: "Muday",
     email: "baptiste_muday@gmail.com",
     age: 24,
     profilePicture: "",
     online: "GET /session (status: active)",
-    id: "zfafafz",
     city: "",
     country: "",
     subscription: "standard | vip | premium",
@@ -44,14 +41,13 @@ export const members = [
     roomId: "room_2SqLH",
   },
   {
-    clerkId: "user_2jMNK",
+    id: "2jMNK",
     firstName: "Nathan",
     lastName: "Toto",
     email: "nathan_toto@gmail.com",
     age: 18,
     profilePicture: "",
     online: "GET /session (status: active)",
-    id: "zfafafz",
     city: "",
     country: "",
     subscription: "standard | vip | premium",
@@ -59,14 +55,13 @@ export const members = [
     roomId: "room_3zEr7",
   },
   {
-    clerkId: "user_jMwNQ",
+    id: "jMwNQ",
     firstName: "Solène",
     lastName: "MUDAY",
     email: "solene_muday@gmail.com",
     age: 20,
     profilePicture: "",
     online: "GET /session (status: active)",
-    id: "zfafafz",
     city: "",
     country: "",
     subscription: "standard | vip | premium",
@@ -74,14 +69,13 @@ export const members = [
     roomId: "room_3zEr7",
   },
   {
-    clerkId: "user_wNQ7d",
+    id: "wNQ7d",
     firstName: "Cyrille",
     lastName: "Toto",
     email: "cyrille_toto@gmail.com",
     age: 50,
     profilePicture: "",
     online: "GET /session (status: active)",
-    id: "zfafafz",
     city: "",
     country: "",
     subscription: "standard | vip | premium",
@@ -90,7 +84,7 @@ export const members = [
   },
 ];
 
-export const rooms = [
+const rooms = [
   {
     id: "room_2SqLH",
     name: "home",
@@ -129,7 +123,7 @@ export const rooms = [
   },
 ];
 
-export const articles = [
+const posts = [
   {
     id: "article_7AmPn",
     title: "home",
@@ -168,37 +162,37 @@ export const articles = [
   },
 ];
 
-export const privateMessages = [
+const privateMessages = [
   {
     id: 1,
-    senderId: "user_2SqLH",
-    receiverId: "user_wNQ7d",
+    senderId: "2SqLH",
+    receiverId: "wNQ7d",
     text: "hello",
     image: "",
     // createdAt: ,
   },
   {
     id: 2,
-    senderId: "user_jMwNQ",
-    receiverId: "user_2SqLH",
+    senderId: "jMwNQ",
+    receiverId: "2SqLH",
     text: "hey",
     image: "",
     // createdAt: ,
   },
   {
     id: 3,
-    senderId: "user_wNQ7d",
-    receiverId: "user_jMwNQ",
+    senderId: "wNQ7d",
+    receiverId: "jMwNQ",
     text: "what's up?",
     image: "",
     // createdAt: ,
   },
 ];
 
-export const roomMessages = [
+const roomMessages = [
   {
     id: 1,
-    senderId: "user_wNQ7d",
+    senderId: "wNQ7d",
     text: "hello everybody!",
     image: "",
     roomId: "room_2SqLH",
@@ -206,7 +200,7 @@ export const roomMessages = [
   },
   {
     id: 1,
-    senderId: "user_wNQ7d",
+    senderId: "wNQ7d",
     text: "hello world!",
     image: "",
     roomId: "room_23Frd",
@@ -214,10 +208,18 @@ export const roomMessages = [
   },
   {
     id: 1,
-    senderId: "user_wNQ7d",
+    senderId: "wNQ7d",
     text: "hello coders!",
     image: "",
     roomId: "room_3zEr7",
     // createdAt: ,
   },
 ];
+
+module.exports = {
+  members,
+  rooms,
+  articles,
+  roomMessages,
+  privateMessages,
+};

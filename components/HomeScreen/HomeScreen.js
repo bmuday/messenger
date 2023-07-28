@@ -1,9 +1,9 @@
 import "./HomeScreen.css";
 
-export default function HomeScreen({ createCall, startHairCheck }) {
+export default function HomeScreen({ createCall, startSettingsCheck }) {
   const startDemo = () => {
     createCall().then((url) => {
-      startHairCheck(url);
+      startSettingsCheck(url);
     });
   };
 

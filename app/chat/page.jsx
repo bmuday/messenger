@@ -10,7 +10,7 @@ import HomeScreen from "../../components/HomeScreen/HomeScreen";
 import Call from "../../components/Call/Call";
 import Header from "../../components/Header/Header";
 import Tray from "../../components/Tray/Tray";
-import HairCheck from "../../components/HairCheck/HairCheck";
+import SettingsCheck from "../../components/SettingsCheck/SettingsCheck";
 
 /* We decide what UI to show to users based on the state of the app, which is dependent on the state of the call object. */
 const STATE_IDLE = "STATE_IDLE";
@@ -19,7 +19,7 @@ const STATE_JOINING = "STATE_JOINING";
 const STATE_JOINED = "STATE_JOINED";
 const STATE_LEAVING = "STATE_LEAVING";
 const STATE_ERROR = "STATE_ERROR";
-const STATE_HAIRCHECK = "STATE_HAIRCHECK";
+const STATE_SETTINGS_CHECK = "STATE_SETTINGS_CHECK";
 
 export default function Home() {
   const [appState, setAppState] = useState(STATE_IDLE);
@@ -45,19 +45,19 @@ export default function Home() {
   }, []);
 
   /**
-   * We've created a room, so let's start the hair check. We won't be joining the call yet.
+   * We've created a room, so let's start the settings check. We won't be joining the call yet.
    */
-  const startHairCheck = useCallback(async (url) => {
+  const startSettingsCheck = useCallback(async (url) => {
     const newCallObject = DailyIframe.createCallObject();
     setRoomUrl(url);
     setCallObject(newCallObject);
-    setAppState(STATE_HAIRCHECK);
+    setAppState(STATE_SETTINGS_CHECK);
     await newCallObject.preAuth({ url }); // add a meeting token here if your room is private
     await newCallObject.startCamera();
   }, []);
 
   /**
-   * Once we pass the hair check, we can actually join the call.
+   * Once we pass the settings check, we can actually join the call.
    */
   const joinCall = useCallback(() => {
     callObject.join({ url: roomUrl });
@@ -90,9 +90,9 @@ export default function Home() {
   useEffect(() => {
     const url = roomUrlFromPageUrl();
     if (url) {
-      startHairCheck(url);
+      startSettingsCheck(url);
     }
-  }, [startHairCheck]);
+  }, [startSettingsCheck]);
 
   /**
    * Update the page's URL to reflect the active call when roomUrl changes.
@@ -143,7 +143,7 @@ export default function Home() {
      * Listen for changes in state.
      * We can't use the useDailyEvent hook (https://docs.daily.co/reference/daily-react/use-daily-event) for this
      * because right now, we're not inside a <DailyProvider/> (https://docs.daily.co/reference/daily-react/daily-provider)
-     * context yet. We can't access the call object via daily-react just yet, but we will later in Call.js and HairCheck.js!
+     * context yet. We can't access the call object via daily-react just yet, but we will later in Call.js and SettingsCheck.js!
      */
     events.forEach((event) => callObject.on(event, handleNewMeetingState));
 
@@ -160,9 +160,9 @@ export default function Home() {
   const showCall =
     !apiError && [STATE_JOINING, STATE_JOINED, STATE_ERROR].includes(appState);
 
-  /* When there's no problems creating the room and startHairCheck() has been successfully called,
-   * we can show the hair check UI. */
-  const showHairCheck = !apiError && appState === STATE_HAIRCHECK;
+  /* When there's no problems creating the room and startSettingsCheck() has been successfully called,
+   * we can show the settings check UI. */
+  const showSettingsCheck = !apiError && appState === STATE_SETTINGS_CHECK;
 
   const renderApp = () => {
     // If something goes wrong with creating the room.
@@ -183,16 +183,16 @@ export default function Home() {
       );
     }
 
-    // No API errors? Let's check our hair then.
-    if (showHairCheck) {
+    // No API errors? Let's check our settings then.
+    if (showSettingsCheck) {
       return (
         <DailyProvider callObject={callObject}>
-          <HairCheck joinCall={joinCall} cancelCall={startLeavingCall} />
+          <SettingsCheck joinCall={joinCall} cancelCall={startLeavingCall} />
         </DailyProvider>
       );
     }
 
-    // No API errors, we passed the hair check, and we've joined the call? Then show the call.
+    // No API errors, we passed the settings check, and we've joined the call? Then show the call.
     if (showCall) {
       return (
         <DailyProvider callObject={callObject}>
@@ -204,7 +204,10 @@ export default function Home() {
 
     // The default view is the HomeScreen, from where we start the demo.
     return (
-      <HomeScreen createCall={createCall} startHairCheck={startHairCheck} />
+      <HomeScreen
+        createCall={createCall}
+        startSettingsCheck={startSettingsCheck}
+      />
     );
   };
 

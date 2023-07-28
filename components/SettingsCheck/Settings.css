@@ -1,4 +1,4 @@
-.hair-check {
+.settings-check {
   background: white;
   border: 1px solid grey;
   padding: 1rem;
@@ -10,11 +10,11 @@
   justify-content: center;
 }
 
-.hair-check video {
+.settings-check video {
   max-width: 480px;
 }
 
-.hair-check label {
+.settings-check label {
   display: block;
   color: var(--dark-grey);
   font-size: 12px;
@@ -22,8 +22,8 @@
   line-height: 14px;
 }
 
-.hair-check input,
-.hair-check select {
+.settings-check input,
+.settings-check select {
   border: 1px solid var(--grey);
   padding: 0.5em;
   border-radius: 4px;
@@ -31,18 +31,18 @@
   width: 100%;
 }
 
-.hair-check h1 {
+.settings-check h1 {
   font-size: 1em;
   text-align: center;
   margin-bottom: 1em;
   color: var(--dark-blue);
 }
 
-.hair-check button {
+.settings-check button {
   margin-top: 2em;
 }
 
-.hair-check button + button {
+.settings-check button + button {
   margin-top: 0;
 }
 

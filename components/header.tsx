@@ -4,8 +4,8 @@ import Link from "next/link";
 
 export default function header() {
   return (
-    <header className="p-4 text-gray-800 bg-gray-100">
-      <div className="container flex justify-between h-16 mx-auto">
+    <header className="p-4 text-gray-800">
+      <div className="container flex justify-between h-16 mx-auto border-b-gray-100">
         <a
           rel="noopener noreferrer"
           href="/"

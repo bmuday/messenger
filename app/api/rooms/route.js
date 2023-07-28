@@ -23,7 +23,6 @@ export async function GET() {
       },
     });
     const data = await res.json();
-    console.log("data", data);
 
     const room = NextResponse.json(data);
     console.log("room", room);
