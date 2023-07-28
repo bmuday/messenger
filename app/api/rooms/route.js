@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   const exp = Math.round(Date.now() / 1000) + 60 * 30;
   const options = {
     properties: {

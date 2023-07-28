@@ -23,6 +23,29 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "app/createRoom.js",
+    "app/chat/page.jsx",
+    "app/blog/page.jsx",
+    "lib/utils.ts",
+    "lib/constants.js",
+    "dummydata.js",
+    "middleware.js",
+    "app/sign-up/page.jsx",
+    "app/sign-in/page.jsx",
+    "app/rooms/page.jsx",
+    "app/members/page.jsx",
+    "app/hooks/useFetchItems.js",
+    "app/api/rooms/route.js",
+    "app/directus.js",
+    "app/error.tsx",
+    "app/page.jsx",
+    "app/loading.jsx",
+    "app/layout.tsx"
+  ],
   "exclude": ["node_modules"]
 }

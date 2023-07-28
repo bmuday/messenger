@@ -1,14 +1,14 @@
 "use client";
-
 import { useEffect, useState, useCallback } from "react";
 import DailyIframe from "@daily-co/daily-js";
 import { DailyProvider } from "@daily-co/daily-react";
 
-import api from "../api";
-import { roomUrlFromPageUrl, pageUrlFromRoomUrl } from "@/lib/utils";
+import createRoom from "../createRoom";
+import { roomUrlFromPageUrl, pageUrlFromRoomUrl } from "../../lib/utils";
 
 import HomeScreen from "../../components/HomeScreen/HomeScreen";
 import Call from "../../components/Call/Call";
+import Header from "../../components/Header/Header";
 import Tray from "../../components/Tray/Tray";
 import HairCheck from "../../components/HairCheck/HairCheck";
 
@@ -21,11 +21,11 @@ const STATE_LEAVING = "STATE_LEAVING";
 const STATE_ERROR = "STATE_ERROR";
 const STATE_HAIRCHECK = "STATE_HAIRCHECK";
 
-export default function App() {
-  const [appState, setAppState] = useState<any>(STATE_IDLE);
-  const [roomUrl, setRoomUrl] = useState<any>(null);
-  const [callObject, setCallObject] = useState<any>(null);
-  const [apiError, setApiError] = useState<any>(false);
+export default function Home() {
+  const [appState, setAppState] = useState(STATE_IDLE);
+  const [roomUrl, setRoomUrl] = useState(null);
+  const [callObject, setCallObject] = useState(null);
+  const [apiError, setApiError] = useState(false);
 
   /**
    * Create a new call room. This function will return the newly created room URL.
@@ -34,12 +34,8 @@ export default function App() {
    */
   const createCall = useCallback(() => {
     setAppState(STATE_CREATING);
-    return api
-      .createRoom()
-      .then((room) => {
-        console.log("url", room.url);
-        return room.url;
-      })
+    return createRoom()
+      .then((room) => room.url)
       .catch((error) => {
         console.error("Error creating room", error);
         setRoomUrl(null);
@@ -51,7 +47,7 @@ export default function App() {
   /**
    * We've created a room, so let's start the hair check. We won't be joining the call yet.
    */
-  const startHairCheck = useCallback(async (url: any) => {
+  const startHairCheck = useCallback(async (url) => {
     const newCallObject = DailyIframe.createCallObject();
     setRoomUrl(url);
     setCallObject(newCallObject);
@@ -93,7 +89,6 @@ export default function App() {
    */
   useEffect(() => {
     const url = roomUrlFromPageUrl();
-    console.log("url", url);
     if (url) {
       startHairCheck(url);
     }
@@ -105,7 +100,7 @@ export default function App() {
   useEffect(() => {
     const pageUrl = pageUrlFromRoomUrl(roomUrl);
     if (pageUrl === window.location.href) return;
-    window.history.replaceState(null, "", pageUrl);
+    window.history.replaceState(null, null, pageUrl);
   }, [roomUrl]);
 
   /**
@@ -212,5 +207,10 @@ export default function App() {
     );
   };
 
-  return <div className="app">{renderApp()}</div>;
+  return (
+    <div className="app">
+      <Header />
+      {renderApp()}
+    </div>
+  );
 }
