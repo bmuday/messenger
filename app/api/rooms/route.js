@@ -21,6 +21,7 @@ export async function GET() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${process.env.NEXT_DAILY_API_KEY}`,
       },
+      cache: "no-store",
     });
     const data = await res.json();
 
