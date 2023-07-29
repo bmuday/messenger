@@ -16,7 +16,7 @@ export default function SelectedMember({ selectedMember }) {
       <button>Envoyer un message</button>
       <button>Voir le profil</button>
       <button>Signaler</button>
-      <button>Bloquer l'utilisateur</button>
+      <button>Bloquer l&apos;utilisateur</button>
     </div>
   );
 }
