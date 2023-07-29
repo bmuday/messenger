@@ -1,10 +1,11 @@
+import Image from "next/image";
 import "./header.css";
 
 export default function Header() {
   return (
     <header>
       <div className="header-section">
-        <img src="/images/logo.svg" alt="Daily logo" />
+        <Image src="/images/logo.svg" alt="Daily logo" />
         <span className="title">
           Custom video application demo with Daily React
         </span>
@@ -17,7 +18,7 @@ export default function Header() {
           rel="noreferrer"
         >
           <span>API docs</span>
-          <img src="/images/newtab.svg" alt="New tab" />
+          <Image src="/images/newtab.svg" alt="New tab" />
         </a>
         <a
           className="github-link"
@@ -25,7 +26,7 @@ export default function Header() {
           target="_blank"
           rel="noreferrer"
         >
-          <img src="/images/github.svg" alt="Github" />
+          <Image src="/images/github.svg" alt="Github" />
         </a>
       </div>
     </header>

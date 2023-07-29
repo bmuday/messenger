@@ -6,6 +6,7 @@ export default function SelectedMember({ selectedMember }) {
       <p>{selectedMember?.firstName}</p>
       <Image
         src={selectedMember?.profileImage || "/images/avatar-undefined.jpg"} // || avatar draftbit
+        alt={selectedMember?.firstName}
         width={200}
         height={200}
       />
