@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function Home() {
   return (
     <section className="text-gray-800">
-      <div className="container flex justify-center p-6 mx-auto sm:py-12 lg:py-24 lg:flex-row lg:justify-between">
+      <div className="flex justify-between p-6 sm:py-12 lg:py-24 lg:flex-row lg:justify-between">
         <div className="flex flex-col justify-center p-6 m-5 text-center rounded-sm lg:max-w-md xl:max-w-lg lg:text-left">
           <h1 className="text-5xl font-bold sm:text-6xl">
             Ac mattis
@@ -14,7 +14,7 @@ export default function Home() {
             <br className="hidden md:inline lg:hidden" />
           </p>
           <div className="flex flex-col space-y-4 sm:items-center sm:justify-center sm:flex-row sm:space-y-0 sm:space-x-4 lg:justify-start">
-            <a rel="noopener noreferrer" href="/chat">
+            <a rel="noopener noreferrer" href="/chatt">
               <button className="px-5 py-3 text-lg font-semibold rounded bg-violet-600 text-gray-50">
                 Rejoindre le chat
               </button>

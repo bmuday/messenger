@@ -6,23 +6,25 @@ import { DailyProvider } from "@daily-co/daily-react";
 import createRoom from "../createRoom";
 import { roomUrlFromPageUrl, pageUrlFromRoomUrl } from "../../lib/utils";
 
-import HomeScreen from "../../components/HomeScreen/HomeScreen";
-import Call from "../../components/Call/Call";
-import Header from "../../components/Header/Header";
-import Tray from "../../components/Tray/Tray";
-import SettingsCheck from "../../components/SettingsCheck/SettingsCheck";
+import HomeScreen from "../../components/chat/homeScreen/HomeScreen";
+import Call from "../../components/chat/call/Call";
+import Header from "../../components/chat/header/Header";
+import Tray from "../../components/chat/tray/Tray";
+import SettingsCheck from "../../components/chat/settingsCheck/SettingsCheck";
 
 /* We decide what UI to show to users based on the state of the app, which is dependent on the state of the call object. */
-const STATE_IDLE = "STATE_IDLE";
-const STATE_CREATING = "STATE_CREATING";
-const STATE_JOINING = "STATE_JOINING";
-const STATE_JOINED = "STATE_JOINED";
-const STATE_LEAVING = "STATE_LEAVING";
-const STATE_ERROR = "STATE_ERROR";
-const STATE_SETTINGS_CHECK = "STATE_SETTINGS_CHECK";
+const state = {
+  idle: "STATE_IDLE",
+  settingsCheck: "STATE_SETTINGS_CHECK",
+  creating: "STATE_CREATING",
+  joining: "STATE_JOINING",
+  joined: "STATE_JOINED",
+  leaving: "STATE_LEAVING",
+  error: "STATE_ERROR",
+};
 
 export default function Home() {
-  const [appState, setAppState] = useState(STATE_IDLE);
+  const [appState, setAppState] = useState(state.idle);
   const [roomUrl, setRoomUrl] = useState(null);
   const [callObject, setCallObject] = useState(null);
   const [apiError, setApiError] = useState(false);
@@ -33,13 +35,13 @@ export default function Home() {
    * or joining (https://docs.daily.co/reference/rn-daily-js/instance-methods/join) a call.
    */
   const createCall = useCallback(() => {
-    setAppState(STATE_CREATING);
+    setAppState(state.creating);
     return createRoom()
       .then((room) => room.url)
       .catch((error) => {
         console.error("Error creating room", error);
         setRoomUrl(null);
-        setAppState(STATE_IDLE);
+        setAppState(state.idle);
         setApiError(true);
       });
   }, []);
@@ -47,12 +49,10 @@ export default function Home() {
   /**
    * We've created a room, so let's start the settings check. We won't be joining the call yet.
    */
-  const startSettingsCheck = useCallback(async (url) => {
+  const startSettingsCheck = useCallback(async () => {
     const newCallObject = DailyIframe.createCallObject();
-    setRoomUrl(url);
     setCallObject(newCallObject);
-    setAppState(STATE_SETTINGS_CHECK);
-    await newCallObject.preAuth({ url }); // add a meeting token here if your room is private
+    setAppState(state.settings_check);
     await newCallObject.startCamera();
   }, []);
 
@@ -69,16 +69,16 @@ export default function Home() {
   const startLeavingCall = useCallback(() => {
     if (!callObject) return;
     // If we're in the error state, we've already "left", so just clean up
-    if (appState === STATE_ERROR) {
+    if (appState === state.error) {
       callObject.destroy().then(() => {
         setRoomUrl(null);
         setCallObject(null);
-        setAppState(STATE_IDLE);
+        setAppState(state.idle);
       });
     } else {
       /* This will trigger a `left-meeting` event, which in turn will trigger
       the full clean-up as seen in handleNewMeetingState() below. */
-      setAppState(STATE_LEAVING);
+      setAppState(state.leaving);
       callObject.leave();
     }
   }, [callObject, appState]);
@@ -119,17 +119,17 @@ export default function Home() {
     function handleNewMeetingState() {
       switch (callObject.meetingState()) {
         case "joined-meeting":
-          setAppState(STATE_JOINED);
+          setAppState(state.joined);
           break;
         case "left-meeting":
           callObject.destroy().then(() => {
             setRoomUrl(null);
             setCallObject(null);
-            setAppState(STATE_IDLE);
+            setAppState(state.idle);
           });
           break;
         case "error":
-          setAppState(STATE_ERROR);
+          setAppState(state.error);
           break;
         default:
           break;
@@ -158,29 +158,29 @@ export default function Home() {
    * an error that is _not_ a room API error.
    */
   const showCall =
-    !apiError && [STATE_JOINING, STATE_JOINED, STATE_ERROR].includes(appState);
+    !apiError && [state.joining, state.joined, state.error].includes(appState);
 
   /* When there's no problems creating the room and startSettingsCheck() has been successfully called,
    * we can show the settings check UI. */
-  const showSettingsCheck = !apiError && appState === STATE_SETTINGS_CHECK;
+  const showSettingsCheck = !apiError && appState === state.settings_check;
 
   const renderApp = () => {
     // If something goes wrong with creating the room.
     if (apiError) {
-      console.log("apiError");
-      return (
-        <div className="api-error">
-          <h1>Error</h1>
-          <p>
-            Room could not be created. Check if your `.env` file is set up
-            correctly. For more information, see the{" "}
-            <a href="https://github.com/daily-demos/custom-video-daily-react-hooks#readme">
-              readme
-            </a>{" "}
-            :)
-          </p>
-        </div>
-      );
+      console.error(apiError);
+      // return (
+      //   <div className="api-error">
+      //     <h1>Error</h1>
+      //     <p>
+      //       Room could not be created. Check if your `.env` file is set up
+      //       correctly. For more information, see the{" "}
+      //       <a href="https://github.com/daily-demos/custom-video-daily-react-hooks#readme">
+      //         readme
+      //       </a>{" "}
+      //       :)
+      //     </p>
+      //   </div>
+      // );
     }
 
     // No API errors? Let's check our settings then.

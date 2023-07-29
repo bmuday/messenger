@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import {
   useLocalParticipant,
   useDevices,
@@ -6,9 +6,9 @@ import {
   useDailyEvent,
   DailyVideo,
 } from "@daily-co/daily-react";
-import UserMediaError from "../UserMediaError/UserMediaError";
+import UserMediaError from "../userMediaError/UserMediaError";
 
-import "./Settings.css";
+import "./settings.css";
 
 export default function SettingsCheck({ joinCall, cancelCall }) {
   const localParticipant = useLocalParticipant();

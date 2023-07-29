@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from "react";
 import {
   useDaily,
   useScreenShare,
@@ -6,12 +6,11 @@ import {
   useVideoTrack,
   useAudioTrack,
   useDailyEvent,
-} from '@daily-co/daily-react';
+} from "@daily-co/daily-react";
 
-import MeetingInformation from '../MeetingInformation/MeetingInformation';
-import Chat from '../Chat/Chat';
+import Chat from "../messages/Messages";
 
-import './Tray.css';
+import "./tray.css";
 import {
   CameraOn,
   Leave,
@@ -22,11 +21,12 @@ import {
   Info,
   ChatIcon,
   ChatHighlighted,
-} from './Icons';
+} from "./icons/Icons";
 
 export default function Tray({ leaveCall }) {
   const callObject = useDaily();
-  const { isSharingScreen, startScreenShare, stopScreenShare } = useScreenShare();
+  const { isSharingScreen, startScreenShare, stopScreenShare } =
+    useScreenShare();
 
   const [showMeetingInformation, setShowMeetingInformation] = useState(false);
   const [showChat, setShowChat] = useState(false);
@@ -42,13 +42,13 @@ export default function Tray({ leaveCall }) {
    * chat icon in the Tray as a notification. By listening for the `"app-message"` event we'll know
    * when someone has sent a message. */
   useDailyEvent(
-    'app-message',
+    "app-message",
     useCallback(() => {
       /* Only light up the chat icon if the chat isn't already open. */
       if (!showChat) {
         setNewChatMessage(true);
       }
-    }, [showChat]),
+    }, [showChat])
   );
 
   const toggleVideo = useCallback(() => {
@@ -59,7 +59,8 @@ export default function Tray({ leaveCall }) {
     callObject.setLocalAudio(mutedAudio);
   }, [callObject, mutedAudio]);
 
-  const toggleScreenShare = () => (isSharingScreen ? stopScreenShare() : startScreenShare());
+  const toggleScreenShare = () =>
+    isSharingScreen ? stopScreenShare() : startScreenShare();
 
   const toggleMeetingInformation = () => {
     setShowMeetingInformation(!showMeetingInformation);
@@ -87,25 +88,25 @@ export default function Tray({ leaveCall }) {
         <div className="controls">
           <button onClick={toggleVideo} type="button">
             {mutedVideo ? <CameraOff /> : <CameraOn />}
-            {mutedVideo ? 'Turn camera on' : 'Turn camera off'}
+            {mutedVideo ? "Turn camera on" : "Turn camera off"}
           </button>
           <button onClick={toggleAudio} type="button">
             {mutedAudio ? <MicrophoneOff /> : <MicrophoneOn />}
-            {mutedAudio ? 'Unmute mic' : 'Mute mic'}
+            {mutedAudio ? "Unmute mic" : "Mute mic"}
           </button>
         </div>
         <div className="actions">
           <button onClick={toggleScreenShare} type="button">
             <Screenshare />
-            {isSharingScreen ? 'Stop sharing screen' : 'Share screen'}
+            {isSharingScreen ? "Stop sharing screen" : "Share screen"}
           </button>
           <button onClick={toggleMeetingInformation} type="button">
             <Info />
-            {showMeetingInformation ? 'Hide info' : 'Show info'}
+            {showMeetingInformation ? "Hide info" : "Show info"}
           </button>
           <button onClick={toggleChat} type="button">
             {newChatMessage ? <ChatHighlighted /> : <ChatIcon />}
-            {showChat ? 'Hide chat' : 'Show chat'}
+            {showChat ? "Hide chat" : "Show chat"}
           </button>
         </div>
         <div className="leave">

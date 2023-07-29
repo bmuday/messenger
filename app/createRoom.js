@@ -1,7 +1,9 @@
 export default async function createRoom() {
   try {
-    const data = await (await fetch("/api/rooms")).text();
+    const res = await fetch("/api/rooms");
+    const data = await res.text();
     const room = JSON.parse(data);
+    console.log("roomClient", room);
     return room;
   } catch (error) {
     console.log("error", error);

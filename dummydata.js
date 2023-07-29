@@ -5,12 +5,25 @@ const members = [
     lastName: "Altman",
     email: "samantha_altman@gmail.com",
     profilePicture: "",
-    online: "GET /session (status: active)",
+    online: "GET /presence",
+    age: 34,
     city: "",
     country: "",
     subscription: "standard | vip | premium",
     role: "user | moderator",
     roomId: "room_2SqLH",
+    gender: "female",
+    chatSettings: {
+      // paramètres par défault ...
+      settingsCheck: {
+        microphones: "microphones",
+        speakers: "speakers",
+        cameras: "cameras",
+      },
+      blockedUsers: [],
+      notifications: {},
+      darkmode: true,
+    },
   },
   {
     id: "jMwNQ",
@@ -18,13 +31,18 @@ const members = [
     lastName: "Hilfilgher",
     email: "clara_hilfilgher@gmail.com",
     profilePicture: "",
-    online: "GET /session (status: active)",
+    online: "GET /presence",
     age: 34,
     city: "",
     country: "",
     subscription: "standard | vip | premium",
     role: "user | moderator",
     roomId: "room_1EfPc",
+    gender: "female",
+    chatSettings: {
+      blockedUsers: [],
+      notifications: {}, // par défault ...
+    },
   },
   {
     id: "Fjtt4",
@@ -33,12 +51,17 @@ const members = [
     email: "baptiste_muday@gmail.com",
     age: 24,
     profilePicture: "",
-    online: "GET /session (status: active)",
+    online: "GET /presence",
     city: "",
     country: "",
     subscription: "standard | vip | premium",
     role: "user | moderator",
     roomId: "room_2SqLH",
+    gender: "male",
+    chatSettings: {
+      blockedUsers: [],
+      notifications: {}, // par défault ...
+    },
   },
   {
     id: "2jMNK",
@@ -47,26 +70,36 @@ const members = [
     email: "nathan_toto@gmail.com",
     age: 18,
     profilePicture: "",
-    online: "GET /session (status: active)",
+    online: "GET /presence",
     city: "",
     country: "",
     subscription: "standard | vip | premium",
     role: "user | moderator",
     roomId: "room_3zEr7",
+    gender: "male",
+    chatSettings: {
+      blockedUsers: [],
+      notifications: {}, // par défault ...
+    },
   },
   {
-    id: "jMwNQ",
+    id: "jMwNQa",
     firstName: "Solène",
     lastName: "MUDAY",
     email: "solene_muday@gmail.com",
     age: 20,
     profilePicture: "",
-    online: "GET /session (status: active)",
+    online: "GET /presence",
     city: "",
     country: "",
     subscription: "standard | vip | premium",
     role: "user | moderator",
     roomId: "room_3zEr7",
+    gender: "female",
+    chatSettings: {
+      blockedUsers: [],
+      notifications: {}, // par défault ...
+    },
   },
   {
     id: "wNQ7d",
@@ -75,12 +108,17 @@ const members = [
     email: "cyrille_toto@gmail.com",
     age: 50,
     profilePicture: "",
-    online: "GET /session (status: active)",
+    online: "GET /presence",
     city: "",
     country: "",
     subscription: "standard | vip | premium",
     role: "user | moderator",
     roomId: "room_23Frd",
+    gender: "male",
+    chatSettings: {
+      blockedUsers: [],
+      notifications: {}, // par défault ...
+    },
   },
 ];
 
@@ -169,6 +207,7 @@ const privateMessages = [
     receiverId: "wNQ7d",
     text: "hello",
     image: "",
+    pollAnswer: "",
     // createdAt: ,
   },
   {
@@ -177,6 +216,7 @@ const privateMessages = [
     receiverId: "2SqLH",
     text: "hey",
     image: "",
+    pollAnswer: "",
     // createdAt: ,
   },
   {
@@ -185,6 +225,7 @@ const privateMessages = [
     receiverId: "jMwNQ",
     text: "what's up?",
     image: "",
+    pollAnswer: "",
     // createdAt: ,
   },
 ];
@@ -219,7 +260,7 @@ const roomMessages = [
 module.exports = {
   members,
   rooms,
-  articles,
+  posts,
   roomMessages,
   privateMessages,
 };

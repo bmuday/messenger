@@ -1,7 +1,11 @@
-import "./HomeScreen.css";
+import "./homeScreen.css";
 
 export default function HomeScreen({ createCall, startSettingsCheck }) {
   const startDemo = () => {
+    // setRoomUrl(url);
+    // await newCallObject.preAuth({ url }); // add a meeting token here if your room is private
+    startSettingsCheck().then();
+
     createCall().then((url) => {
       startSettingsCheck(url);
     });

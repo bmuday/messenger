@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react";
 import { useAppMessage, useLocalParticipant } from "@daily-co/daily-react";
 
-import { Arrow } from "../Tray/Icons/index";
-import "./Chat.css";
+import { Arrow } from "../tray/icons/Icons";
+import "./messages.css";
 
 export default function Chat({ showChat, toggleChat }) {
   const localParticipant = useLocalParticipant();

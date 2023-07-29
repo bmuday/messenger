@@ -1,5 +1,3 @@
-import React from 'react';
-
 export function CameraOn() {
   return (
     <svg
@@ -8,7 +6,8 @@ export function CameraOn() {
       height="24"
       viewBox="0 0 24 24"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg">
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -27,7 +26,8 @@ export function CameraOff() {
       height="24"
       viewBox="0 0 24 24"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg">
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path
         d="M20.5303 4.53033C20.8232 4.23744 20.8232 3.76256 20.5303 3.46967C20.2374 3.17678 19.7626 3.17678 19.4697 3.46967L14.6168 8.32252L14.6162 8.32164L6.43781 16.5H6.43934L3.46967 19.4697C3.17678 19.7626 3.17678 20.2374 3.46967 20.5303C3.76256 20.8232 4.23744 20.8232 4.53033 20.5303L8.56066 16.5H13C14.1046 16.5 15 15.6046 15 14.5V10.0607L20.5303 4.53033Z"
         fill="#f63135"
@@ -52,7 +52,8 @@ export function MicrophoneOn() {
       height="24"
       viewBox="0 0 24 24"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg">
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -71,7 +72,8 @@ export function MicrophoneOff() {
       height="24"
       viewBox="0 0 24 24"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg">
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path
         d="M12 3C13.5979 3 14.904 4.24928 14.9949 5.8244L9 11.8193V6C9 4.34315 10.3431 3 12 3Z"
         fill="#f63135"
@@ -96,7 +98,8 @@ export function Screenshare() {
       height="24"
       viewBox="0 0 24 24"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg">
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -115,7 +118,8 @@ export function Leave() {
       height="24"
       viewBox="0 0 24 24"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg">
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path
         d="M7 4.5H14C15.3807 4.5 16.5 5.61929 16.5 7V10H15V7C15 6.44772 14.5523 6 14 6H7C6.44772 6 6 6.44772 6 7V17C6 17.5523 6.44772 18 7 18H14C14.5523 18 15 17.5523 15 17V14H16.5V17C16.5 18.3807 15.3807 19.5 14 19.5H7C5.61929 19.5 4.5 18.3807 4.5 17V7C4.5 5.61929 5.61929 4.5 7 4.5Z"
         fill="#f63135"
@@ -136,7 +140,8 @@ export function Info() {
       height="24"
       viewBox="0 0 24 24"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg">
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path
         d="M12 20.25C7.44365 20.25 3.75 16.5563 3.75 12C3.75 7.44365 7.44365 3.75 12 3.75C16.5563 3.75 20.25 7.44365 20.25 12C20.25 16.5563 16.5563 20.25 12 20.25Z"
         stroke="#121A24"
@@ -161,7 +166,13 @@ export function Info() {
 
 export function ChatIcon() {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -174,7 +185,13 @@ export function ChatIcon() {
 
 export function ChatHighlighted() {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -187,7 +204,13 @@ export function ChatHighlighted() {
 
 export function Arrow() {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path
         d="M5 11.25C4.58579 11.25 4.25 11.5858 4.25 12C4.25 12.4142 4.58579 12.75 5 12.75V11.25ZM19 12L19.5303 12.5303C19.8232 12.2374 19.8232 11.7626 19.5303 11.4697L19 12ZM14.5303 6.46967C14.2374 6.17678 13.7626 6.17678 13.4697 6.46967C13.1768 6.76256 13.1768 7.23744 13.4697 7.53033L14.5303 6.46967ZM13.4697 16.4697C13.1768 16.7626 13.1768 17.2374 13.4697 17.5303C13.7626 17.8232 14.2374 17.8232 14.5303 17.5303L13.4697 16.4697ZM5 12.75H19V11.25H5V12.75ZM19.5303 11.4697L14.5303 6.46967L13.4697 7.53033L18.4697 12.5303L19.5303 11.4697ZM18.4697 11.4697L13.4697 16.4697L14.5303 17.5303L19.5303 12.5303L18.4697 11.4697Z"
         fill="#121A24"

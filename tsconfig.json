@@ -45,7 +45,8 @@
     "app/error.tsx",
     "app/page.jsx",
     "app/loading.jsx",
-    "app/layout.tsx"
+    "app/layout.tsx",
+    "app/chatt/page.jsx"
   ],
   "exclude": ["node_modules"]
 }
