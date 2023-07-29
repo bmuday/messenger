@@ -2,7 +2,7 @@
 import { footerLinks } from "@/lib/constants";
 import { usePathname } from "next/navigation";
 
-export default function footer() {
+export default function Footer() {
   const pathname = usePathname();
   const display = !pathname.includes("/chat");
   if (!display) return;

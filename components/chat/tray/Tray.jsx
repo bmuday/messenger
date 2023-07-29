@@ -75,7 +75,7 @@ export default function Tray({ leaveCall }) {
 
   return (
     <div className="tray">
-      {showMeetingInformation && <MeetingInformation />}
+      {/* {showMeetingInformation && <MeetingInformation />} */}
       {/*  The chat messages 'live' in the <Chat/> component's state. We can't just remove the component */}
       {/*  from the DOM when hiding the chat, because that would cause us to lose that state. So we're */}
       {/*  choosing a slightly different approach of toggling the chat: always render the component, but only */}

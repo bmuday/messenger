@@ -1,12 +1,11 @@
 "use client";
 import Avatar from "./avatar";
 import { headerLinks } from "@/lib/constants";
-import { SearchIcon } from "lucide-react";
 import SearchBar from "../components/SearchBar";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export default function header() {
+export default function Header() {
   const pathname = usePathname();
   const chat = pathname.includes("/chat");
   if (chat)
