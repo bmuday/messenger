@@ -1,4 +1,5 @@
 import "./userMediaError.css";
+import Link from "next/link";
 
 const refreshPage = () => {
   console.log(
@@ -16,13 +17,13 @@ export default function UserMediaError() {
           Try again
         </button>
         <p>
-          <a
+          <Link
             href="https://docs.daily.co/guides/how-daily-works/handling-device-permissions"
             target="_blank"
             rel="noreferrer"
           >
             Get help
-          </a>
+          </Link>
         </p>
       </div>
     </div>

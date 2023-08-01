@@ -1,7 +1,6 @@
-import Header from "@/components/header";
 import "./globals.css";
 import type { Metadata } from "next";
-import Footer from "@/components/footer";
+import Body from "../components/Body";
 
 export const metadata: Metadata = {
   title: "Chat App",
@@ -15,11 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="container flex flex-col justify-between w-full min-h-screen">
-        <Header />
-        <main>{children}</main>
-        <Footer />
-      </body>
+      <Body children={children} />
     </html>
   );
 }

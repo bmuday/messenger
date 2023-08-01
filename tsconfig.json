@@ -36,7 +36,7 @@
     "dummydata.js",
     "middleware.js",
     "app/sign-up/page.jsx",
-    "app/sign-in/page.jsx",
+    "app/login/page.jsx",
     "app/rooms/page.jsx",
     "app/members/page.jsx",
     "app/hooks/useFetchItems.js",
@@ -46,7 +46,9 @@
     "app/page.jsx",
     "app/loading.jsx",
     "app/layout.tsx",
-    "app/chatt/page.jsx"
+    "app/app/page.jsx",
+    "components/header.jsx",
+    "components/footer.jsx"
   ],
   "exclude": ["node_modules"]
 }

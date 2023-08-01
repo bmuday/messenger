@@ -1,11 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
 import { members, rooms } from "@/dummydata";
-import RoomsBar from "../../components/chat/sections/RoomsBar";
+import LeftBar from "../../components/chat/sections/LeftBar";
 import MainBar from "../../components/chat/sections/MainBar";
-import MembersBar from "../../components/chat/sections/MembersBar";
+import RightBar from "../../components/chat/sections/RightBar";
 import SelectedMember from "../../components/chat/sections/SelectedMember";
 import AddMessage from "../../components/chat/addMessage";
+import SearchBar from "../../components/SearchBar";
 
 export default function Chat() {
   // Dès la 1e connecxion,
@@ -13,7 +14,7 @@ export default function Chat() {
   const [publicRooms, setPublicRooms] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState(rooms[0]);
   const [roomMembers, setRoomMembers] = useState([]);
-  const [displayRoomMessages, setDisplayRoomMessages] = useState(false);
+  const [displayRoomMessages, setDisplayRoomMessages] = useState(true);
   const [displayPrivateMessages, setDisplayPrivateMessages] = useState(false);
   const [displayMembers, setDisplayMembers] = useState(false);
   const [selectedMember, setSelectedMember] = useState(null);
@@ -46,25 +47,35 @@ export default function Chat() {
     setDisplayMembers(true);
   }, [selectedRoom]);
   return (
-    <div>
-      <div className="flex items-center justify-between space-y-4">
-        <RoomsBar publicRooms={publicRooms} setSelectedRoom={setSelectedRoom} />
-        <MainBar selectedRoom={selectedRoom} />
-        {displayMembers && (
-          <MembersBar
-            roomMembers={roomMembers}
-            setDisplayMembers={setDisplayMembers}
-            setDisplaySelectedMember={setDisplaySelectedMember}
-            setSelectedMember={setSelectedMember}
-          />
-        )}
-        {displaySelectedMember && (
-          <SelectedMember selectedMember={selectedMember} />
-        )}
+    <div className="flex items-center h-full">
+      <LeftBar />
+      <div className="flex flex-col items-center justify-center w-full h-full border">
+        <div className="flex justify-between w-full h-full">
+          <div className="flex flex-col w-full">
+            <SearchBar />
+            <MainBar selectedRoom={selectedRoom} />
+            {(displayRoomMessages || displayPrivateMessages) && <AddMessage />}
+          </div>
+          {displayMembers && (
+            <RightBar
+              publicRooms={publicRooms}
+              setSelectedRoom={setSelectedRoom}
+              roomMembers={roomMembers}
+              setDisplayMembers={setDisplayMembers}
+              displaySelectedMember={displaySelectedMember}
+              setDisplaySelectedMember={setDisplaySelectedMember}
+              setSelectedMember={setSelectedMember}
+            />
+          )}
+          {displaySelectedMember && (
+            <SelectedMember
+              selectedMember={selectedMember}
+              setDisplayMembers={setDisplayMembers}
+              setDisplaySelectedMember={setDisplaySelectedMember}
+            />
+          )}
+        </div>
       </div>
-      <footer>
-        <AddMessage />
-      </footer>
     </div>
   );
 }

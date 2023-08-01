@@ -1,3 +1,3 @@
 export default function AddMessage() {
-  return <div>Add Message</div>;
+  return <footer className="flex justify-center">Add message</footer>;
 }

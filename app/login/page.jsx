@@ -1,5 +1,5 @@
 import LoginSignup from "../../components/LoginSignup";
 
 export default function page() {
-  return <LoginSignup login={false} signup={true} />;
+  return <LoginSignup login={true} signup={false} />;
 }
