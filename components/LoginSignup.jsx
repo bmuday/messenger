@@ -48,6 +48,7 @@ export default function LoginSignup({ login, signup }) {
         <div className="flex justify-center m-3 space-x-4">
           {logIcons.map((i) => (
             <button
+              key={i.name}
               aria-label={`Log in with ${i.name}`}
               className="p-3 rounded-sm"
             >
@@ -57,7 +58,7 @@ export default function LoginSignup({ login, signup }) {
         </div>
         {login && (
           <p className="text-xs text-center text-gray-600 sm:px-6">
-            <span className="mr-2">Don't have an account?</span>
+            <span className="mr-2">Don&apos;t have an account?</span>
             <a
               rel="noopener noreferrer"
               href="#"

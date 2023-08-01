@@ -26,7 +26,7 @@ export default function LeftBar() {
       <div className="divide-y divide-gray-300">
         <ul className="pt-2 pb-4 space-y-1 text-sm">
           {leftBarLinks.map((l) => (
-            <li className="hover:text-gray-900 hover:bg-gray-100">
+            <li key={l.label} className="hover:text-gray-900 hover:bg-gray-100">
               <Link
                 rel="noopener noreferrer"
                 href={l.url}
@@ -43,6 +43,7 @@ export default function LeftBar() {
           {leftBarSubLinks.map((l) => (
             <li className="hover:text-gray-900 hover:bg-gray-100">
               <Link
+                key={l.label}
                 rel="noopener noreferrer"
                 href={l.url}
                 className="flex items-center p-2 space-x-3 rounded-md"
