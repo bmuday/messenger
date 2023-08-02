@@ -1,3 +1,5 @@
+//TODO: Fix error : navigator is not defined
+"use client";
 export default function Loading() {
   // You can add any UI inside Loading, including a Skeleton.
   return (
