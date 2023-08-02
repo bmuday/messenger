@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Undo2 } from "lucide-react";
 import Image from "next/image";
+import { useEffect } from "react";
 
 export default function SelectedMember({
   selectedMember,
@@ -8,8 +9,9 @@ export default function SelectedMember({
   setDisplaySelectedMember,
 }) {
   return (
-    <div>
+    <div className="flex flex-col w-full bg-gray-50">
       <Button
+        className="mx-10 my-2 bg-black"
         onClick={() => {
           setDisplaySelectedMember(false);
           setDisplayMembers(true);
@@ -28,7 +30,6 @@ export default function SelectedMember({
       <p>
         <span>{selectedMember?.age}</span>•<span>{selectedMember?.gender}</span>
       </p>
-      <button>Envoyer un message</button>
       <button>Voir le profil</button>
       <button>Signaler</button>
       <button>Bloquer l&apos;utilisateur</button>

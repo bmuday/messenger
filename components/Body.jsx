@@ -8,13 +8,13 @@ export default function Body({ children }) {
   const pathname = usePathname();
   const display = !pathname.includes("/app");
   const container = classnames({
-    "flex flex-col justify-between h-full": true,
+    "flex flex-col justify-between h-full w-full": true,
     container: display,
   });
   return (
     <body className={container}>
       <Header display={display} />
-      <main className="flex items-center justify-center h-full">
+      <main className="flex items-center justify-center w-full h-full">
         {children}
       </main>
       <Footer display={display} />

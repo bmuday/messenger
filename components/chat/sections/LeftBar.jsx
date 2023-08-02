@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function LeftBar() {
   return (
-    <div className="h-full p-3 space-y-2 text-gray-800 w-60 bg-gray-50">
+    <div className="w-full h-full p-3 space-y-2 text-gray-800 bg-gray-50">
       <div className="flex items-center p-2 space-x-4">
         <Avatar>
           <AvatarImage src="https://github.com/shadcn.png" />
@@ -15,7 +15,7 @@ export default function LeftBar() {
           <span className="flex items-center space-x-1">
             <Link
               rel="noopener noreferrer"
-              href="/profile"
+              href="/profile/1"
               className="text-xs text-gray-600 hover:underline"
             >
               View profile

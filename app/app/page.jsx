@@ -5,7 +5,6 @@ import LeftBar from "../../components/chat/sections/LeftBar";
 import MainBar from "../../components/chat/sections/MainBar";
 import RightBar from "../../components/chat/sections/RightBar";
 import SelectedMember from "../../components/chat/sections/SelectedMember";
-import AddMessage from "../../components/chat/addMessage";
 import SearchBar from "../../components/SearchBar";
 
 export default function Chat() {
@@ -42,20 +41,26 @@ export default function Chat() {
     };
 
     getRoomMembers();
-    // display room members
+    // display room members and messages
     setDisplaySelectedMember(false);
     setDisplayMembers(true);
+    setDisplayRoomMessages(true);
   }, [selectedRoom]);
+
   return (
-    <div className="flex items-center h-full">
+    <div className="flex w-full h-full">
       <LeftBar />
-      <div className="flex flex-col items-center justify-center w-full h-full border">
+      <div className="flex flex-col w-full h-full">
+        <SearchBar />
+        <MainBar
+          selectedRoom={selectedRoom}
+          selectedMember={selectedMember}
+          displayRoomMessages={displayRoomMessages}
+          displayPrivateMessages={displayPrivateMessages}
+        />
+      </div>
+      <div className="flex flex-col items-center justify-center w-full h-full p-3 space-y-2 border bg-gray-50">
         <div className="flex justify-between w-full h-full">
-          <div className="flex flex-col w-full">
-            <SearchBar />
-            <MainBar selectedRoom={selectedRoom} />
-            {(displayRoomMessages || displayPrivateMessages) && <AddMessage />}
-          </div>
           {displayMembers && (
             <RightBar
               publicRooms={publicRooms}
@@ -64,7 +69,10 @@ export default function Chat() {
               setDisplayMembers={setDisplayMembers}
               displaySelectedMember={displaySelectedMember}
               setDisplaySelectedMember={setDisplaySelectedMember}
+              selectedMember={selectedMember}
               setSelectedMember={setSelectedMember}
+              setDisplayRoomMessages={setDisplayRoomMessages}
+              setDisplayPrivateMessages={setDisplayPrivateMessages}
             />
           )}
           {displaySelectedMember && (
