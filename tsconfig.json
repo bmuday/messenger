@@ -32,14 +32,14 @@
     "app/chatt/page.jsx",
     "app/blog/page.jsx",
     "lib/utils.ts",
-    "lib/constants.js",
+    "lib/constants/constants.js",
     "dummydata.js",
     "middleware.js",
     "app/sign-up/page.jsx",
     "app/login/page.jsx",
     "app/rooms/page.jsx",
     "app/members/page.jsx",
-    "app/hooks/useFetchItems.js",
+    "hooks/useFetch.js",
     "app/api/rooms/route.js",
     "app/directus.js",
     "app/error.tsx",
@@ -48,7 +48,9 @@
     "app/layout.tsx",
     "app/app/page.jsx",
     "components/header.jsx",
-    "components/footer.jsx"
+    "components/footer.jsx",
+    "lib/directus.js",
+    "components/avatar.jsx"
   ],
   "exclude": ["node_modules"]
 }

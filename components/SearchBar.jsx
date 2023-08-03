@@ -11,8 +11,8 @@ export default function SearchBar() {
           placeholder="Search..."
         />
       </div>
-      <div className="flex p-2 font-semibold text-gray-500 rounded-lg cursor-pointer">
-        <span>All categories</span>
+      <div className="flex items-center px-2 font-semibold text-gray-500 border rounded cursor-pointer">
+        <span className="">All categories</span>
 
         <svg
           xmlns="http://www.w3.org/2000/svg"

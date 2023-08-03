@@ -1,5 +1,5 @@
-import LoginSignup from "../../components/LoginSignup";
+import LoginForm from "../../components/LoginForm";
 
 export default function page() {
-  return <LoginSignup login={true} signup={false} />;
+  return <LoginForm />;
 }

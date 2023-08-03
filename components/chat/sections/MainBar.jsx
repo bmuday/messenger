@@ -10,12 +10,15 @@ export default function MainBar({
   displayPrivateMessages,
 }) {
   const { name, nbUsers, image } = selectedRoom;
-  const [peer, setPeer] = useState(new Peer());
-  const [peerId, setPeerId] = useState("");
   const [privateMessages, setPrivateMessages] = useState(["hello"]);
   const [roomMessages, setRoomMessages] = useState(["world"]);
-
+  // Create a peer
+  const [peer, setPeer] = useState(new Peer());
+  const [peerId, setPeerId] = useState("");
   console.log("peer", peer);
+
+  // Connect to another peer
+  const conn = peer.connect();
 
   peer.on("connection", (conn) => {
     console.log("conn", conn);
@@ -32,13 +35,13 @@ export default function MainBar({
       {displayRoomMessages &&
         roomMessages?.map((m, index) => (
           <div key={index} className="h-full">
-            roomMessages
+            {m}
           </div>
         ))}
       {displayPrivateMessages &&
         privateMessages?.map((m, index) => (
           <div key={index} className="h-full">
-            privateMessages
+            {m}
           </div>
         ))}
       {(displayRoomMessages || displayPrivateMessages) && <AddMessage />}

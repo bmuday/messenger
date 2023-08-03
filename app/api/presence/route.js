@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { publicRooms } from "@/dummydata";
+import { activeMembers } from "@/dummydata";
 
 export async function GET() {
-  const endpoint = "http://localhost:8055/";
+  const endpoint = "";
   try {
     // const res = await fetch(endpoint, {
     //   headers: {
@@ -14,8 +14,8 @@ export async function GET() {
 
     // console.log("data", NextResponse.json(data));
     // return NextResponse.json(data);
-    console.log("public", publicRooms);
-    return publicRooms;
+    console.log("active", activeMembers);
+    return activeMembers;
   } catch (error) {
     console.log("error", error);
   }
