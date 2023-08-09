@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import useSignup from "../../../hooks/useSignup";
 
 export async function POST(req) {
   try {

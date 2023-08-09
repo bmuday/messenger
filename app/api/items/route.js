@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import useFetchItems from "@/hooks/useFetchItems";
 
 export async function POST(req) {
   try {

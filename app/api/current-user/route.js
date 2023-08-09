@@ -1,5 +1,3 @@
-import useFetchDirectus from "@/hooks/useFetchDirectus";
-
 export async function GET(req) {
   let authorization;
   for (const pair of req.headers.entries()) {
