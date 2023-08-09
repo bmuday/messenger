@@ -1,4 +1,4 @@
-export default async function useFetch(url, options) {
+export default async function fetchDirectus(url, options) {
   try {
     const res = await fetch(url, options);
     if (url.includes("logout")) return;

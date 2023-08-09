@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useUserStore } from "@/stores";
 import { logIcons } from "@/lib/constants";
-import useFetch from "@/hooks/useFetch";
+import fetchDirectus from "@/hooks/fetchDirectus";
 
 export default function SignupForm() {
   const [firstName, setFirstName] = useState("");
@@ -38,11 +38,11 @@ export default function SignupForm() {
       headers,
       body,
     };
-    const { data: signupData } = await useFetch(signupURL, options);
+    const { data: signupData } = await fetchDirectus(signupURL, options);
 
     const loginEndpoint = "/auth/login";
     const loginURL = process.env.NEXT_PUBLIC_API_URL + loginEndpoint;
-    const { data: loginData } = await useFetch(loginURL, options);
+    const { data: loginData } = await fetchDirectus(loginURL, options);
 
     if (signupData && loginData) {
       setUser(signupData);

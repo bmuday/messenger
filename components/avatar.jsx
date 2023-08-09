@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Moon, Sun } from "lucide-react";
 import { useDarkStore, useUserStore } from "@/stores";
-import useFetch from "@/hooks/useFetch";
+import fetchDirectus from "@/hooks/fetchDirectus";
 
 export default function Avatar() {
   const isPremium = false;
@@ -39,7 +39,7 @@ export default function Avatar() {
     if (refresh_token) options.body = JSON.stringify({ refresh_token });
     console.log("options", options);
     try {
-      await useFetch(URL, options);
+      await fetchDirectus(URL, options);
       setUser(null);
       console.log("user", user);
       setUserSession(null);

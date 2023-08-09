@@ -1,5 +1,5 @@
 "use client";
-import useFetch from "@/hooks/useFetch";
+import fetchDirectus from "@/hooks/fetchDirectus";
 import { useUserStore } from "@/stores";
 import { useState, useEffect } from "react";
 
@@ -24,7 +24,7 @@ export default function CurrentUser() {
 
     if (access_token) options.headers.Authorization = `Bearer ${access_token}`;
     try {
-      const { data } = await useFetch(URL, options);
+      const { data } = await fetchDirectus(URL, options);
       console.log("data1", data);
     } catch (error) {
       console.log("error", error);

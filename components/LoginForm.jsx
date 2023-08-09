@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useUserStore } from "@/stores";
 import { logIcons } from "@/lib/constants";
-import useFetch from "@/hooks/useFetch";
+import fetchDirectus from "@/hooks/fetchDirectus";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -31,7 +31,7 @@ export default function LoginForm() {
 
     if (access_token) options.headers.Authorization = `Bearer ${access_token}`;
     try {
-      const { data } = await useFetch(URL, options);
+      const { data } = await fetchDirectus(URL, options);
       setUser(data);
     } catch (error) {
       console.log("error", error);
@@ -54,7 +54,7 @@ export default function LoginForm() {
       headers,
       body,
     };
-    const { data } = await useFetch(URL, options);
+    const { data } = await fetchDirectus(URL, options);
 
     if (data) {
       await getCurrentUser();

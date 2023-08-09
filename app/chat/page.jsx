@@ -7,9 +7,9 @@ import SearchBar from "../../components/chat/sections/SearchBar";
 import { useUserStore } from "../../stores";
 import { useEffect, useState } from "react";
 import SelectedMember from "../../components/chat/sections/SelectedMember";
-import useFetch from "../../hooks/useFetch";
+import fetchDirectus from "../../hooks/fetchDirectus";
 
-export default function page() {
+export default function Chat() {
   // Dès la 1e connexion,
   // faire settingsCheck et enregistrer paramètres dans le profil user
   const [error, setError] = useState(null);
@@ -42,7 +42,7 @@ export default function page() {
 
     if (access_token) options.headers.Authorization = `Bearer ${access_token}`;
     try {
-      const { data } = await useFetch(URL, options);
+      const { data } = await fetchDirectus(URL, options);
       console.log("data", data);
       setPublicRooms(data);
     } catch (error) {
@@ -67,7 +67,7 @@ export default function page() {
 
     if (access_token) options.headers.Authorization = `Bearer ${access_token}`;
     try {
-      const { data } = await useFetch(URL, options);
+      const { data } = await fetchDirectus(URL, options);
       console.log("data1", data);
       setActiveMembers(data);
     } catch (error) {
@@ -91,7 +91,7 @@ export default function page() {
     };
 
     if (access_token) options.headers.Authorization = `Bearer ${access_token}`;
-    const { data } = await useFetch(URL, options);
+    const { data } = await fetchDirectus(URL, options);
     console.log("data2", data);
     setRoomMembers(data);
     const roomMembers = activeMembers?.filter(

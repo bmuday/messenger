@@ -3,7 +3,7 @@ import MainBar from "../../components/chat/sections/MainBar";
 import RightBar from "../../components/chat/sections/RightBar";
 import SearchBar from "../../components/chat/sections/SearchBar";
 
-export default function App() {
+export default function Events() {
   return (
     <div className="flex w-full h-full">
       <LeftBar />
