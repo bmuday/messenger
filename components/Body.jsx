@@ -1,15 +1,17 @@
 "use client";
 
-import { useState } from "react";
 import { usePathname } from "next/navigation";
 import Header from "./header";
 import Footer from "./footer";
 import classnames from "classnames";
 import { useDarkStore } from "@/stores";
+import { leftBarLinks } from "@/lib/constants";
 
 export default function Body({ children }) {
   const pathname = usePathname();
-  const display = !pathname.includes("/app");
+  const leftBar = leftBarLinks.map((l) => l.url);
+  const links = [...leftBar, "/settings", "/app"];
+  const display = !links.includes(pathname);
   const dark = useDarkStore((state) => state.dark);
   const dynamic_class = classnames({
     "flex flex-col justify-between h-full w-full": true,

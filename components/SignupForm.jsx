@@ -6,7 +6,7 @@ import { useUserStore } from "@/stores";
 import { logIcons } from "@/lib/constants";
 import useFetch from "@/hooks/useFetch";
 
-export default function LoginSignup() {
+export default function SignupForm() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");

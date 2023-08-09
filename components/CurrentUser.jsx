@@ -7,8 +7,6 @@ export default function CurrentUser() {
   const user = useUserStore((state) => state.user);
   const userSession = useUserStore((state) => state.userSession);
   const [error, setError] = useState(null);
-  console.log("user", user);
-  console.log("userSession", userSession);
   const access_token = useUserStore((state) => state.userSession)?.access_token;
 
   const getCurrentUser = async () => {
@@ -37,6 +35,9 @@ export default function CurrentUser() {
   useEffect(() => {
     getCurrentUser();
   }, []);
+
+  console.log("user", user);
+  console.log("userSession", userSession);
 
   if (user)
     return (

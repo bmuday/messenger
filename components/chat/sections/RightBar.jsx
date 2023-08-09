@@ -36,7 +36,7 @@ export default function RightBar({
       </TabsList>
       <TabsContent value="rooms">
         <div className="flex flex-col pt-5">
-          {publicRooms.map((r) => (
+          {publicRooms?.map((r) => (
             <button
               key={r.id}
               onClick={() => {
@@ -53,7 +53,7 @@ export default function RightBar({
       </TabsContent>
       <TabsContent value="members">
         <div className="flex flex-col">
-          {roomMembers.map((m) => (
+          {roomMembers?.map((m) => (
             <Button
               className="flex justify-between px-2"
               variant="outline"

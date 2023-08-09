@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import Avatar from "./avatar";
 import { headerLinks } from "@/lib/constants";

@@ -6,13 +6,38 @@ import { useUserStore } from "@/stores";
 import { logIcons } from "@/lib/constants";
 import useFetch from "@/hooks/useFetch";
 
-export default function LoginSignup() {
+export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
+  const setUser = useUserStore((state) => state.setUser);
   const setUserSession = useUserStore((state) => state.setUserSession);
+  const access_token = useUserStore((state) => state.userSession)?.access_token;
+
+  const getCurrentUser = async () => {
+    const endpoint = "/users/me";
+    const URL = process.env.NEXT_PUBLIC_API_URL + endpoint;
+    const method = "GET";
+    const headers = {
+      "Content-Type": "application/json",
+    };
+
+    const options = {
+      method,
+      headers,
+    };
+
+    if (access_token) options.headers.Authorization = `Bearer ${access_token}`;
+    try {
+      const { data } = await useFetch(URL, options);
+      setUser(data);
+    } catch (error) {
+      console.log("error", error);
+      setError(error);
+    }
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -32,6 +57,7 @@ export default function LoginSignup() {
     const { data } = await useFetch(URL, options);
 
     if (data) {
+      await getCurrentUser();
       setUserSession(data);
       setSuccess("Connexion...");
       setTimeout(() => {
