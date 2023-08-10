@@ -133,7 +133,7 @@ export default function Chat() {
           />
         )}
       </div>
-      <div className="flex flex-col items-center justify-center w-full h-full p-3 space-y-2 border bg-gray-50">
+      <div className="flex flex-col items-center justify-center h-full p-3 space-y-2 border bg-gray-50">
         <div className="flex justify-between w-full h-full">
           {displayMembers && (
             <RightBar

@@ -2,6 +2,6 @@
 import { useParams } from "next/navigation";
 
 export default function Profile() {
-  const { params } = useParams();
-  return <div>{params}</div>;
+  const params = useParams();
+  return <div>{params.id}</div>;
 }

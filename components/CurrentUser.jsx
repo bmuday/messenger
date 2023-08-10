@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 
 export default function CurrentUser() {
   const user = useUserStore((state) => state.user);
+  const setUser = useUserStore((state) => state.setUser);
   const userSession = useUserStore((state) => state.userSession);
   const [error, setError] = useState(null);
   const access_token = useUserStore((state) => state.userSession)?.access_token;
@@ -25,7 +26,7 @@ export default function CurrentUser() {
     if (access_token) options.headers.Authorization = `Bearer ${access_token}`;
     try {
       const { data } = await fetchDirectus(URL, options);
-      console.log("data1", data);
+      setUser(data);
     } catch (error) {
       console.log("error", error);
       setError(error);

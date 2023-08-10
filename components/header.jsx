@@ -4,12 +4,13 @@ import Avatar from "./avatar";
 import { headerLinks } from "@/lib/constants";
 import classnames from "classnames";
 import CurrentUser from "./CurrentUser";
-import { useUserStore } from "@/stores";
 import { usePathname } from "next/navigation";
+import { useUserStore } from "@/stores";
 
 export default function Header({ display }) {
   const pathname = usePathname();
   const displayCurrentUser = pathname === "/";
+  const user = useUserStore((state) => state.user);
   if (!display) return;
   return (
     <header className="p-4 text-gray-800">
@@ -47,7 +48,7 @@ export default function Header({ display }) {
               );
             })}
           </div>
-          <Avatar />
+          {user && <Avatar />}
         </div>
       </div>
     </header>

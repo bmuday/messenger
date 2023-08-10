@@ -8,7 +8,7 @@ import classNames from "classnames";
 export default function LeftBar() {
   const pathname = usePathname();
   return (
-    <div className="w-full h-full p-3 space-y-2 text-gray-800 bg-gray-50">
+    <div className="h-full p-3 space-y-2 text-gray-800 bg-gray-50">
       <div className="flex items-center p-2 space-x-4">
         <Avatar>
           <AvatarImage src="https://github.com/shadcn.png" />

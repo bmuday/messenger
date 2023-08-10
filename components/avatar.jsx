@@ -12,9 +12,11 @@ import {
 import { Moon, Sun } from "lucide-react";
 import { useDarkStore, useUserStore } from "@/stores";
 import fetchDirectus from "@/hooks/fetchDirectus";
+import { useRouter } from "next/navigation";
 
 export default function Avatar() {
   const isPremium = false;
+  const router = useRouter();
   const dark = useDarkStore((state) => state.dark);
   const setDark = useDarkStore((state) => state.changeMode);
   const user = useUserStore((state) => state.user);
@@ -44,6 +46,7 @@ export default function Avatar() {
       console.log("user", user);
       setUserSession(null);
       console.log("user session null", userSession);
+      router.push("/login");
     } catch (error) {
       console.log("error", error);
     }

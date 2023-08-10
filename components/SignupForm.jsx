@@ -38,14 +38,13 @@ export default function SignupForm() {
       headers,
       body,
     };
-    const { data: signupData } = await fetchDirectus(signupURL, options);
+    await fetchDirectus(signupURL, options);
 
     const loginEndpoint = "/auth/login";
     const loginURL = process.env.NEXT_PUBLIC_API_URL + loginEndpoint;
     const { data: loginData } = await fetchDirectus(loginURL, options);
 
-    if (signupData && loginData) {
-      setUser(signupData);
+    if (loginData) {
       setUserSession(loginData);
       setSuccess("Connexion...");
       setTimeout(() => {
