@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -21,38 +22,32 @@ export default function SignupForm() {
     e.preventDefault();
 
     const signupEndpoint = "/users";
-    const signupURL = process.env.NEXT_PUBLIC_API_URL + signupEndpoint;
-    const method = "POST";
-    const headers = {
-      "Content-Type": "application/json",
-    };
-    console.log("email", email, password, firstName, lastName);
-    const body = JSON.stringify({
-      email,
-      password,
-      first_name: firstName,
-      last_name: lastName,
-    });
     const options = {
-      method,
-      headers,
-      body,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+        first_name: firstName,
+        last_name: lastName,
+      }),
     };
-    await fetchDirectus(signupURL, options);
+    const { data: user } = await fetchDirectus(signupEndpoint, options);
 
     const loginEndpoint = "/auth/login";
-    const loginURL = process.env.NEXT_PUBLIC_API_URL + loginEndpoint;
-    const { data: loginData } = await fetchDirectus(loginURL, options);
+    const { data } = await fetchDirectus(loginEndpoint, options);
 
-    if (loginData) {
-      setUserSession(loginData);
+    try {
+      setUser(user);
+      setUserSession(data);
       setSuccess("Connexion...");
       setTimeout(() => {
         setSuccess("");
         router.push("/");
-      }, 2000);
-    }
-    if (error) {
+      }, 1000);
+    } catch (error) {
       if (error.message.includes("Invalid")) {
         setError("Wrong email or password.");
       } else {

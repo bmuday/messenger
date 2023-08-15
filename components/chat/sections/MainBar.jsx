@@ -9,7 +9,7 @@ export default function MainBar({
   displayRoomMessages,
   displayPrivateMessages,
 }) {
-  const { name, nbUsers, image } = selectedRoom;
+  // const { name, nbUsers, image } = selectedRoom;
   const [privateMessages, setPrivateMessages] = useState(["hello"]);
   const [roomMessages, setRoomMessages] = useState(["world"]);
   // Create a peer
@@ -30,6 +30,7 @@ export default function MainBar({
       conn.send({ [selectedMember?.firstName]: "hello!" });
     });
   });
+
   return (
     <main className="flex flex-col items-center justify-center w-full h-full pt-5">
       {displayRoomMessages &&

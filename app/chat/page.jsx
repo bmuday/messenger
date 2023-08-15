@@ -8,6 +8,7 @@ import { useUserStore } from "../../stores";
 import { useEffect, useState } from "react";
 import SelectedMember from "../../components/chat/sections/SelectedMember";
 import fetchDirectus from "../../hooks/fetchDirectus";
+import { useRouter } from "next/navigation";
 
 export default function Chat() {
   // Dès la 1e connexion,
@@ -19,9 +20,10 @@ export default function Chat() {
   const [roomMembers, setRoomMembers] = useState([]);
   const [displayRoomMessages, setDisplayRoomMessages] = useState(true);
   const [displayPrivateMessages, setDisplayPrivateMessages] = useState(false);
-  const [displayMembers, setDisplayMembers] = useState(false);
+  const [displayRoomMembers, setDisplayRoomMembers] = useState(false);
   const [selectedMember, setSelectedMember] = useState(null);
   const [displaySelectedMember, setDisplaySelectedMember] = useState(false);
+  const router = useRouter();
 
   const user = useUserStore((state) => state.user);
   const access_token = useUserStore((state) => state.userSession)?.access_token;
@@ -29,23 +31,20 @@ export default function Chat() {
   // fetch public rooms /rooms (server-side call with api key)
   const getPublicRooms = async () => {
     const endpoint = "/items/room";
-    const URL = process.env.NEXT_PUBLIC_API_URL + endpoint;
-    const method = "GET";
-    const headers = {
-      "Content-Type": "application/json",
-    };
+    let options;
+    if (access_token)
+      options = {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      };
 
-    const options = {
-      method,
-      headers,
-    };
-
-    if (access_token) options.headers.Authorization = `Bearer ${access_token}`;
     try {
-      const { data } = await fetchDirectus(URL, options);
+      const { data } = await fetchDirectus(endpoint, options);
       console.log("data", data);
       setPublicRooms(data);
     } catch (error) {
+      router.push("/login");
       console.log("error", error);
       setError(error);
     }
@@ -53,94 +52,65 @@ export default function Chat() {
 
   // fetch activeMembers
   const getActiveMembers = async () => {
-    const endpoint = "/items/member";
-    const URL = process.env.NEXT_PUBLIC_API_URL + endpoint;
-    const method = "GET";
-    const headers = {
-      "Content-Type": "application/json",
-    };
-
-    const options = {
-      method,
-      headers,
-    };
-
-    if (access_token) options.headers.Authorization = `Bearer ${access_token}`;
-    try {
-      const { data } = await fetchDirectus(URL, options);
-      console.log("data1", data);
-      setActiveMembers(data);
-    } catch (error) {
-      console.log("error", error);
-      setError(error);
-    }
+    const { data } = await fetchDirectus(
+      "/items/room_member?fields=member_id&groupBy[]=member_id"
+    );
+    const membersId = data.map((m) => m.member_id);
+    const { data: members } = await fetchDirectus(
+      `/items/member?filter={"id":{"_in":[${membersId}]}}`
+    );
+    setActiveMembers(members);
   };
 
   // fetch room members, no ghost with api endpoint /presence (server-side call with api key)
   const getRoomMembers = async () => {
-    const endpoint = "/items/room";
-    const URL = process.env.NEXT_PUBLIC_API_URL + endpoint;
-    const method = "GET";
-    const headers = {
-      "Content-Type": "application/json",
-    };
-
-    const options = {
-      method,
-      headers,
-    };
-
-    if (access_token) options.headers.Authorization = `Bearer ${access_token}`;
-    const { data } = await fetchDirectus(URL, options);
-    console.log("data2", data);
-    setRoomMembers(data);
-    const roomMembers = activeMembers?.filter(
-      (m) => m.roomId === selectedRoom.id
+    const { data } = await fetchDirectus(
+      `/items/room_member?filter={"room_id":{"_eq":"${selectedRoom?.id}"}}&fields=member_id?fields=member_id&groupBy[]=member_id`
     );
-    // setRoomMembers(roomMembers);
+    const membersId = data?.map((m) => m.member_id);
+    const roomMembers = activeMembers.filter((m) => membersId.includes(m.id));
+    setRoomMembers(roomMembers);
   };
 
   useEffect(() => {
-    getPublicRooms();
-    getActiveMembers();
-    setSelectedRoom(publicRooms[0]);
+    getPublicRooms().then(() => {
+      getActiveMembers();
+      console.log("public", publicRooms);
+      const firstRoom = publicRooms[0];
+      setSelectedRoom(firstRoom);
+    });
   }, []);
 
   useEffect(() => {
-    getRoomMembers();
+    getRoomMembers().then(() => {
+      console.log("selectedRoom", selectedRoom);
+      console.log("roomMembers", roomMembers);
+    });
     // display room members and messages
     setDisplaySelectedMember(false);
-    setDisplayMembers(true);
+    setDisplayRoomMembers(true);
     setDisplayRoomMessages(true);
   }, [selectedRoom]);
-
-  console.log("user", user);
-  console.log("publicRooms: ", publicRooms);
-  console.log("activeMembers: ", activeMembers);
-  console.log("selectedRoom", selectedRoom);
-  console.log("roomMembers", roomMembers);
   return (
     <div className="flex w-full h-full">
       <LeftBar />
       <div className="flex flex-col w-full h-full">
         <SearchBar />
-        {selectedRoom && (
-          <MainBar
-            selectedRoom={selectedRoom}
-            selectedMember={selectedMember}
-            displayRoomMessages={displayRoomMessages}
-            displayPrivateMessages={displayPrivateMessages}
-          />
-        )}
+        <MainBar
+          selectedRoom={selectedRoom}
+          selectedMember={selectedMember}
+          displayRoomMessages={displayRoomMessages}
+          displayPrivateMessages={displayPrivateMessages}
+        />
       </div>
       <div className="flex flex-col items-center justify-center h-full p-3 space-y-2 border bg-gray-50">
         <div className="flex justify-between w-full h-full">
-          {displayMembers && (
+          {displayRoomMembers && (
             <RightBar
               publicRooms={publicRooms}
               setSelectedRoom={setSelectedRoom}
               roomMembers={roomMembers}
-              setDisplayMembers={setDisplayMembers}
+              setDisplayRoomMembers={setDisplayRoomMembers}
               displaySelectedMember={displaySelectedMember}
               setDisplaySelectedMember={setDisplaySelectedMember}
               selectedMember={selectedMember}
@@ -152,7 +122,7 @@ export default function Chat() {
           {displaySelectedMember && (
             <SelectedMember
               selectedMember={selectedMember}
-              setDisplayMembers={setDisplayMembers}
+              setDisplayRoomMembers={setDisplayRoomMembers}
               setDisplaySelectedMember={setDisplaySelectedMember}
             />
           )}

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -9,7 +9,7 @@ export default function RightBar({
   publicRooms,
   setSelectedRoom,
   roomMembers,
-  setDisplayMembers,
+  setDisplayRoomMembers,
   displaySelectedMember,
   setDisplaySelectedMember,
   selectedMember,
@@ -17,19 +17,17 @@ export default function RightBar({
   setDisplayRoomMessages,
   setDisplayPrivateMessages,
 }) {
-  const [defaultTabValue, setDefaultTabValue] = useState("rooms");
-
   if (displaySelectedMember) {
     return (
       <SelectedMember
         selectedMember={selectedMember}
-        setDisplayMembers={setDisplayMembers}
+        setDisplayRoomMembers={setDisplayRoomMembers}
         setDisplaySelectedMember={setDisplaySelectedMember}
       />
     );
   }
   return (
-    <Tabs defaultValue={defaultTabValue} className="flex flex-col w-full">
+    <Tabs defaultValue={"rooms"} className="flex flex-col w-full">
       <TabsList>
         <TabsTrigger value="rooms">Rooms</TabsTrigger>
         <TabsTrigger value="members">Members</TabsTrigger>
@@ -43,7 +41,6 @@ export default function RightBar({
                 setSelectedRoom(r);
                 setDisplayPrivateMessages(false);
                 setDisplayRoomMessages(true);
-                setDefaultTabValue("rooms");
               }}
             >
               {r.name}
@@ -59,7 +56,7 @@ export default function RightBar({
               variant="outline"
               key={m.id}
               onClick={() => {
-                setDisplayMembers(false);
+                setDisplayRoomMembers(false);
                 setDisplaySelectedMember(true);
                 setDisplayRoomMessages(false);
                 setDisplayPrivateMessages(true);

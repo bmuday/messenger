@@ -29,23 +29,18 @@ export default function Avatar() {
 
   const handleLogout = async () => {
     const endpoint = "/auth/logout";
-    const URL = process.env.NEXT_PUBLIC_API_URL + endpoint;
-    const method = "POST";
-    const headers = {
-      "Content-Type": "application/json",
-    };
     const options = {
-      method,
-      headers,
+      headers: {
+        "Content-Type": "application/json",
+      },
     };
+    options.method = "POST";
     if (refresh_token) options.body = JSON.stringify({ refresh_token });
-    console.log("options", options);
+
     try {
-      await fetchDirectus(URL, options);
+      await fetchDirectus(endpoint, options);
       setUser(null);
-      console.log("user", user);
       setUserSession(null);
-      console.log("user session null", userSession);
       router.push("/login");
     } catch (error) {
       console.log("error", error);

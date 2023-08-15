@@ -1,44 +1,24 @@
 "use client";
-import fetchDirectus from "@/hooks/fetchDirectus";
+
+import { getCurrentUser } from "@/lib/utils";
 import { useUserStore } from "@/stores";
 import { useState, useEffect } from "react";
 
 export default function CurrentUser() {
   const user = useUserStore((state) => state.user);
-  const setUser = useUserStore((state) => state.setUser);
-  const userSession = useUserStore((state) => state.userSession);
   const [error, setError] = useState(null);
   const access_token = useUserStore((state) => state.userSession)?.access_token;
 
-  const getCurrentUser = async () => {
-    const endpoint = "/users/me";
-    const URL = process.env.NEXT_PUBLIC_API_URL + endpoint;
-    const method = "GET";
-    const headers = {
-      "Content-Type": "application/json",
-    };
-
-    const options = {
-      method,
-      headers,
-    };
-
-    if (access_token) options.headers.Authorization = `Bearer ${access_token}`;
+  useEffect(() => {
     try {
-      const { data } = await fetchDirectus(URL, options);
-      setUser(data);
+      getCurrentUser(access_token);
     } catch (error) {
-      console.log("error", error);
       setError(error);
     }
-  };
-
-  useEffect(() => {
-    getCurrentUser();
   }, []);
 
-  console.log("user", user);
-  console.log("userSession", userSession);
+  // console.log("user", user);
+  // console.log("userSession", userSession);
 
   if (user)
     return (

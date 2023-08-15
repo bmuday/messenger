@@ -4,14 +4,19 @@ import Avatar from "./avatar";
 import { headerLinks } from "@/lib/constants";
 import classnames from "classnames";
 import CurrentUser from "./CurrentUser";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useUserStore } from "@/stores";
 
 export default function Header({ display }) {
   const pathname = usePathname();
+  const router = useRouter();
   const displayCurrentUser = pathname === "/";
   const user = useUserStore((state) => state.user);
   if (!display) return;
+  const handleClick = (url) => {
+    if (!user) router.push(url);
+    return;
+  };
   return (
     <header className="p-4 text-gray-800">
       <div className="flex items-center justify-between h-16 border-b-gray-100">
@@ -36,17 +41,18 @@ export default function Header({ display }) {
 
         <div className="flex">
           <div className="flex items-center flex-shrink-0 mr-5 md:flex">
-            {headerLinks.map((l) => {
-              const link = classnames({
-                "self-center px-8 py-3 rounded": true,
-                "font-semibold bg-violet-600 text-gray-50": l.active,
-              });
-              return (
-                <Link key={l.label} href={l.url}>
-                  <button className={link}>{l.label}</button>
-                </Link>
-              );
-            })}
+            {!user &&
+              headerLinks.map((l) => {
+                const link = classnames({
+                  "self-center px-8 py-3 rounded": true,
+                  "font-semibold bg-violet-600 text-gray-50": l.active,
+                });
+                return (
+                  <button onClick={() => handleClick(l.url)} className={link}>
+                    {l.label}
+                  </button>
+                );
+              })}
           </div>
           {user && <Avatar />}
         </div>

@@ -1,11 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Undo2 } from "lucide-react";
 import Image from "next/image";
-import { useEffect } from "react";
 
 export default function SelectedMember({
   selectedMember,
-  setDisplayMembers,
+  setDisplayRoomMembers,
   setDisplaySelectedMember,
 }) {
   return (
@@ -14,7 +13,7 @@ export default function SelectedMember({
         className="mx-10 my-2 bg-black"
         onClick={() => {
           setDisplaySelectedMember(false);
-          setDisplayMembers(true);
+          setDisplayRoomMembers(true);
         }}
       >
         <Undo2 />

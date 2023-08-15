@@ -31,7 +31,7 @@
     "app/createRoom.js",
     "app/chatt/page.jsx",
     "app/blog/page.jsx",
-    "lib/utils.ts",
+    "lib/utils.js",
     "lib/constants/constants.js",
     "dummydata.js",
     "middleware.js",

@@ -1,10 +1,12 @@
 "use client";
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useUserStore } from "@/stores";
 import { logIcons } from "@/lib/constants";
 import fetchDirectus from "@/hooks/fetchDirectus";
+import { getCurrentUser } from "@/lib/utils";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -14,58 +16,33 @@ export default function LoginForm() {
   const router = useRouter();
   const setUser = useUserStore((state) => state.setUser);
   const setUserSession = useUserStore((state) => state.setUserSession);
-  const access_token = useUserStore((state) => state.userSession)?.access_token;
-
-  const getCurrentUser = async () => {
-    const endpoint = "/users/me";
-    const URL = process.env.NEXT_PUBLIC_API_URL + endpoint;
-    const method = "GET";
-    const headers = {
-      "Content-Type": "application/json",
-    };
-
-    const options = {
-      method,
-      headers,
-    };
-
-    if (access_token) options.headers.Authorization = `Bearer ${access_token}`;
-    try {
-      const { data } = await fetchDirectus(URL, options);
-      setUser(data);
-    } catch (error) {
-      console.log("error", error);
-      setError(error);
-    }
-  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     const endpoint = "/auth/login";
-    const URL = process.env.NEXT_PUBLIC_API_URL + endpoint;
-    const method = "POST";
-    const headers = {
-      "Content-Type": "application/json",
-    };
-    const body = JSON.stringify({ email, password });
     const options = {
-      method,
-      headers,
-      body,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
     };
-    const { data } = await fetchDirectus(URL, options);
 
-    if (data) {
-      await getCurrentUser();
-      setUserSession(data);
+    try {
+      const { data: userSession } = await fetchDirectus(endpoint, options);
+      setUserSession(userSession);
+      let user;
+      if (userSession) {
+        user = await getCurrentUser(userSession.access_token);
+        setUser(user);
+      }
       setSuccess("Connexion...");
       setTimeout(() => {
         setSuccess("");
         router.push("/");
-      }, 2000);
-    }
-    if (error) {
+      }, 1000);
+    } catch (error) {
       if (error.message.includes("Invalid")) {
         setError("Wrong email or password.");
       } else {
