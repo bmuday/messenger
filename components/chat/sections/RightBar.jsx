@@ -14,8 +14,6 @@ export default function RightBar({
   setDisplaySelectedMember,
   selectedMember,
   setSelectedMember,
-  setDisplayRoomMessages,
-  setDisplayPrivateMessages,
 }) {
   if (displaySelectedMember) {
     return (
@@ -39,8 +37,6 @@ export default function RightBar({
               key={r.id}
               onClick={() => {
                 setSelectedRoom(r);
-                setDisplayPrivateMessages(false);
-                setDisplayRoomMessages(true);
               }}
             >
               {r.name}
@@ -56,11 +52,6 @@ export default function RightBar({
               variant="outline"
               key={m.id}
               onClick={() => {
-                setDisplayRoomMembers(false);
-                setDisplaySelectedMember(true);
-                setDisplayRoomMessages(false);
-                setDisplayPrivateMessages(true);
-                setDefaultTabValue("members");
                 setSelectedMember(m);
               }}
             >

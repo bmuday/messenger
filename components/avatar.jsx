@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Avatar as Container,
   AvatarFallback,
@@ -11,21 +13,20 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Moon, Sun } from "lucide-react";
 import { useDarkStore, useUserStore } from "@/stores";
-import fetchDirectus from "@/hooks/fetchDirectus";
+import { fetchDirectus } from "@/lib/directus";
 import { useRouter } from "next/navigation";
+import { deleteCookie } from "@/lib/utils";
 
 export default function Avatar() {
   const isPremium = false;
   const router = useRouter();
   const dark = useDarkStore((state) => state.dark);
   const setDark = useDarkStore((state) => state.changeMode);
-  const user = useUserStore((state) => state.user);
-  const userSession = useUserStore((state) => state.userSession);
   const setUser = useUserStore((state) => state.setUser);
+  const setMember = useUserStore((state) => state.setMember);
   const setUserSession = useUserStore((state) => state.setUserSession);
-  const refresh_token = useUserStore(
-    (state) => state.userSession
-  )?.refresh_token;
+  const refresh_token = useUserStore((state) => state.userSession)
+    ?.refresh_token;
 
   const handleLogout = async () => {
     const endpoint = "/auth/logout";
@@ -40,8 +41,10 @@ export default function Avatar() {
     try {
       await fetchDirectus(endpoint, options);
       setUser(null);
+      setMember(null);
       setUserSession(null);
-      router.push("/login");
+      deleteCookie("directus_refresh_token");
+      // router.push("/login");
     } catch (error) {
       console.log("error", error);
     }

@@ -4,11 +4,13 @@ import LeftBar from "../../components/chat/sections/LeftBar";
 import MainBar from "../../components/chat/sections/MainBar";
 import RightBar from "../../components/chat/sections/RightBar";
 import SearchBar from "../../components/chat/sections/SearchBar";
+import ChatLanding from "../../components/chat/sections/ChatLanding";
 import { useUserStore } from "../../stores";
 import { useEffect, useState } from "react";
 import SelectedMember from "../../components/chat/sections/SelectedMember";
 import fetchDirectus from "../../hooks/fetchDirectus";
 import { useRouter } from "next/navigation";
+import { Peer } from "peerjs";
 
 export default function Chat() {
   // Dès la 1e connexion,
@@ -26,7 +28,35 @@ export default function Chat() {
   const router = useRouter();
 
   const user = useUserStore((state) => state.user);
+  const member = useUserStore((state) => state.member);
+  const setMember = useUserStore((state) => state.setMember);
   const access_token = useUserStore((state) => state.userSession)?.access_token;
+
+  // Create a peer
+  const [peer, setPeer] = useState(new Peer());
+  console.log("peer", peer);
+
+  const retrieveMember = async () => {
+    const endpoint = `/items/member?filter[user_id][_eq]=${user.id}`;
+    let options = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    if (access_token) options.headers.Authorization = `Bearer ${access_token}`;
+    try {
+      const { data } = await fetchDirectus(endpoint, options);
+      return data;
+    } catch (error) {
+      console.log("error", error);
+      setError(error);
+    }
+  };
+
+  useEffect(() => {
+    getPublicRooms();
+    getActiveMembers();
+  }, []);
 
   // fetch public rooms /rooms (server-side call with api key)
   const getPublicRooms = async () => {
@@ -41,7 +71,6 @@ export default function Chat() {
 
     try {
       const { data } = await fetchDirectus(endpoint, options);
-      console.log("data", data);
       setPublicRooms(data);
     } catch (error) {
       router.push("/login");
@@ -50,62 +79,99 @@ export default function Chat() {
     }
   };
 
-  // fetch activeMembers
+  useEffect(() => {
+    if (publicRooms) {
+      setSelectedRoom(publicRooms[0]);
+    }
+  }, [publicRooms]);
+
+  useEffect(() => {
+    if (selectedRoom) {
+      setDisplayPrivateMessages(false);
+      setDisplayRoomMessages(true);
+      getRoomMembers();
+    }
+  }, [selectedRoom]);
+
+  // fetch activeMembers without me
   const getActiveMembers = async () => {
-    const { data } = await fetchDirectus(
-      "/items/room_member?fields=member_id&groupBy[]=member_id"
-    );
-    const membersId = data.map((m) => m.member_id);
-    const { data: members } = await fetchDirectus(
-      `/items/member?filter={"id":{"_in":[${membersId}]}}`
-    );
-    setActiveMembers(members);
+    try {
+      const { data } = await fetchDirectus(
+        "/items/room_member?fields=member_id&groupBy[]=member_id"
+      );
+      const membersId = data.map((m) => m.member_id);
+      const { data: members } = await fetchDirectus(
+        `/items/member?filter=[id][_in]=[${membersId}]`
+      );
+      setActiveMembers(members);
+    } catch (error) {
+      console.log("error", error);
+      setError(error);
+    }
   };
 
   // fetch room members, no ghost with api endpoint /presence (server-side call with api key)
   const getRoomMembers = async () => {
-    const { data } = await fetchDirectus(
-      `/items/room_member?filter={"room_id":{"_eq":"${selectedRoom?.id}"}}&fields=member_id?fields=member_id&groupBy[]=member_id`
-    );
-    const membersId = data?.map((m) => m.member_id);
-    const roomMembers = activeMembers.filter((m) => membersId.includes(m.id));
-    setRoomMembers(roomMembers);
+    try {
+      const { data } = await fetchDirectus(
+        `/items/room_member?filter=[room_id][_eq]=[${selectedRoom?.id}]&fields=member_id?fields=member_id&groupBy[]=member_id`
+      );
+      const membersId = data?.map((m) => m.member_id);
+      const members = activeMembers.filter((m) => membersId.includes(m.id));
+      setRoomMembers(members);
+    } catch (error) {
+      console.log("error", error);
+    }
   };
 
   useEffect(() => {
-    getPublicRooms().then(() => {
-      getActiveMembers();
-      console.log("public", publicRooms);
-      const firstRoom = publicRooms[0];
-      setSelectedRoom(firstRoom);
-    });
-  }, []);
+    if (roomMembers) {
+      // display room members and messages
+      setDisplaySelectedMember(false);
+      setDisplayRoomMembers(true);
+      setDisplayRoomMessages(true);
+    }
+  }, [roomMembers]);
 
   useEffect(() => {
-    getRoomMembers().then(() => {
-      console.log("selectedRoom", selectedRoom);
-      console.log("roomMembers", roomMembers);
-    });
-    // display room members and messages
-    setDisplaySelectedMember(false);
-    setDisplayRoomMembers(true);
-    setDisplayRoomMessages(true);
-  }, [selectedRoom]);
+    if (selectedMember) {
+      setDisplayRoomMembers(false);
+      setDisplaySelectedMember(true);
+      setDisplayRoomMessages(false);
+      setDisplayPrivateMessages(true);
+    } else {
+      setDisplaySelectedMember(false);
+      setDisplayRoomMembers(true);
+    }
+  }, [selectedMember]);
+
+  console.log("member", member);
+
   return (
     <div className="flex w-full h-full">
       <LeftBar />
-      <div className="flex flex-col w-full h-full">
+      <div className="flex flex-col items-center w-full h-full">
         <SearchBar />
-        <MainBar
-          selectedRoom={selectedRoom}
-          selectedMember={selectedMember}
-          displayRoomMessages={displayRoomMessages}
-          displayPrivateMessages={displayPrivateMessages}
-        />
+        {!member ? (
+          <ChatLanding
+            retrieveMember={retrieveMember}
+            setMember={setMember}
+            peer={peer}
+          />
+        ) : (
+          <MainBar
+            member={member}
+            peer={peer}
+            selectedRoom={selectedRoom}
+            selectedMember={selectedMember}
+            displayRoomMessages={displayRoomMessages}
+            displayPrivateMessages={displayPrivateMessages}
+          />
+        )}
       </div>
       <div className="flex flex-col items-center justify-center h-full p-3 space-y-2 border bg-gray-50">
         <div className="flex justify-between w-full h-full">
-          {displayRoomMembers && (
+          {displayRoomMembers && roomMembers && (
             <RightBar
               publicRooms={publicRooms}
               setSelectedRoom={setSelectedRoom}
@@ -119,11 +185,10 @@ export default function Chat() {
               setDisplayPrivateMessages={setDisplayPrivateMessages}
             />
           )}
-          {displaySelectedMember && (
+          {displaySelectedMember && selectedMember && (
             <SelectedMember
               selectedMember={selectedMember}
-              setDisplayRoomMembers={setDisplayRoomMembers}
-              setDisplaySelectedMember={setDisplaySelectedMember}
+              setSelectedMember={setSelectedMember}
             />
           )}
         </div>

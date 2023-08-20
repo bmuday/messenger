@@ -9,7 +9,7 @@ const handleSubmit = (e) => {
   });
 };
 
-export default function AddMessage() {
+export default function AddMessage({ setRoomMessages, setPrivateMessages }) {
   const [message, setMessage] = useState("");
   return (
     <footer className="w-full border rounded h-15">

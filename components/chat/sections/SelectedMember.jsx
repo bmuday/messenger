@@ -2,24 +2,19 @@ import { Button } from "@/components/ui/button";
 import { Undo2 } from "lucide-react";
 import Image from "next/image";
 
-export default function SelectedMember({
-  selectedMember,
-  setDisplayRoomMembers,
-  setDisplaySelectedMember,
-}) {
+export default function SelectedMember({ selectedMember, setSelectedMember }) {
   return (
     <div className="flex flex-col w-full bg-gray-50">
       <Button
         className="mx-10 my-2 bg-black"
         onClick={() => {
-          setDisplaySelectedMember(false);
-          setDisplayRoomMembers(true);
+          setSelectedMember(null);
         }}
       >
         <Undo2 />
         <span className="mx-2">Back</span>
       </Button>
-      <p>{selectedMember?.firstName}</p>
+      <p>{selectedMember?.pseudo}</p>
       <Image
         src={selectedMember?.profileImage || "/images/avatar-undefined.jpg"} // || avatar draftbit
         alt={selectedMember?.firstName}

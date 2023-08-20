@@ -5,8 +5,9 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useUserStore } from "@/stores";
 import { logIcons } from "@/lib/constants";
-import fetchDirectus from "@/hooks/fetchDirectus";
+import { fetchDirectus } from "@/lib/directus";
 import { getCurrentUser } from "@/lib/utils";
+import { setCookie } from "@/lib/utils";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -16,6 +17,8 @@ export default function LoginForm() {
   const router = useRouter();
   const setUser = useUserStore((state) => state.setUser);
   const setUserSession = useUserStore((state) => state.setUserSession);
+  const refresh_token = useUserStore((state) => state.userSession)
+    ?.refresh_token;
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -33,10 +36,10 @@ export default function LoginForm() {
       const { data: userSession } = await fetchDirectus(endpoint, options);
       setUserSession(userSession);
       let user;
-      if (userSession) {
-        user = await getCurrentUser(userSession.access_token);
-        setUser(user);
-      }
+      console.log("refresh_token1", userSession.refresh_token);
+      setCookie("directus_refresh_token", userSession.refresh_token, 1);
+      user = await getCurrentUser(userSession.access_token);
+      setUser(user);
       setSuccess("Connexion...");
       setTimeout(() => {
         setSuccess("");

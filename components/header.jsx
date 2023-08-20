@@ -42,13 +42,17 @@ export default function Header({ display }) {
         <div className="flex">
           <div className="flex items-center flex-shrink-0 mr-5 md:flex">
             {!user &&
-              headerLinks.map((l) => {
+              headerLinks.map((l, index) => {
                 const link = classnames({
                   "self-center px-8 py-3 rounded": true,
                   "font-semibold bg-violet-600 text-gray-50": l.active,
                 });
                 return (
-                  <button onClick={() => handleClick(l.url)} className={link}>
+                  <button
+                    key={index}
+                    onClick={() => handleClick(l.url)}
+                    className={link}
+                  >
                     {l.label}
                   </button>
                 );
