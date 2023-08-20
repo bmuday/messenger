@@ -32,9 +32,9 @@ export default function Chat() {
   const setMember = useUserStore((state) => state.setMember);
   const access_token = useUserStore((state) => state.userSession)?.access_token;
 
-  // // Create a peer
-  // const [peer, setPeer] = useState(new Peer());
-  // console.log("peer", peer);
+  // Create a peer
+  const [peer, setPeer] = useState(new Peer());
+  console.log("peer", peer);
 
   // const retrieveMember = async () => {
   //   const endpoint = `/items/member?filter[user_id][_eq]=${user.id}`;
