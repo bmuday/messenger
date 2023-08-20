@@ -32,31 +32,31 @@ export default function Chat() {
   const setMember = useUserStore((state) => state.setMember);
   const access_token = useUserStore((state) => state.userSession)?.access_token;
 
-  // Create a peer
-  const [peer, setPeer] = useState(new Peer());
-  console.log("peer", peer);
+  // // Create a peer
+  // const [peer, setPeer] = useState(new Peer());
+  // console.log("peer", peer);
 
-  const retrieveMember = async () => {
-    const endpoint = `/items/member?filter[user_id][_eq]=${user.id}`;
-    let options = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    if (access_token) options.headers.Authorization = `Bearer ${access_token}`;
-    try {
-      const { data } = await fetchDirectus(endpoint, options);
-      return data;
-    } catch (error) {
-      console.log("error", error);
-      setError(error);
-    }
-  };
+  // const retrieveMember = async () => {
+  //   const endpoint = `/items/member?filter[user_id][_eq]=${user.id}`;
+  //   let options = {
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   };
+  //   if (access_token) options.headers.Authorization = `Bearer ${access_token}`;
+  //   try {
+  //     const { data } = await fetchDirectus(endpoint, options);
+  //     return data;
+  //   } catch (error) {
+  //     console.log("error", error);
+  //     setError(error);
+  //   }
+  // };
 
-  useEffect(() => {
-    getPublicRooms();
-    getActiveMembers();
-  }, []);
+  // useEffect(() => {
+  //   getPublicRooms();
+  //   getActiveMembers();
+  // }, []);
 
   // fetch public rooms /rooms (server-side call with api key)
   const getPublicRooms = async () => {
