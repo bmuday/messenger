@@ -5,7 +5,7 @@ import MainBar from "../../components/chat/sections/MainBar";
 import RightBar from "../../components/chat/sections/RightBar";
 import SearchBar from "../../components/chat/sections/SearchBar";
 import ChatLanding from "../../components/chat/sections/ChatLanding";
-import { useUserStore } from "../../stores";
+import { usePeerStore, useUserStore } from "../../stores";
 import { useEffect, useState } from "react";
 import SelectedMember from "../../components/chat/sections/SelectedMember";
 import { fetchDirectus } from "@/lib/directus";
@@ -33,30 +33,38 @@ export default function Chat() {
   const access_token = useUserStore((state) => state.userSession)?.access_token;
 
   // Create a peer
-  const [peer, setPeer] = useState(new Peer());
-  console.log("peer", peer);
+  const peer = usePeerStore((state) => state.peer);
+  const setPeer = usePeerStore((state) => state.setPeer);
+  if (!peer) {
+    const initPeer = new Peer();
+    setPeer(initPeer);
+  } else {
+    console.log("peer", peer);
+  }
 
-  // const retrieveMember = async () => {
-  //   const endpoint = `/items/member?filter[user_id][_eq]=${user.id}`;
-  //   let options = {
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   };
-  //   if (access_token) options.headers.Authorization = `Bearer ${access_token}`;
-  //   try {
-  //     const { data } = await fetchDirectus(endpoint, options);
-  //     return data;
-  //   } catch (error) {
-  //     console.log("error", error);
-  //     setError(error);
-  //   }
-  // };
+  const retrieveMember = async () => {
+    const endpoint = `/items/member?filter[user_id][_eq]=${user.id}`;
+    let options = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    if (access_token) options.headers.Authorization = `Bearer ${access_token}`;
+    try {
+      const { data } = await fetchDirectus(endpoint, options);
+      return data;
+    } catch (error) {
+      console.log("error", error);
+      setError(error);
+    }
+  };
 
-  // useEffect(() => {
-  //   getPublicRooms();
-  //   getActiveMembers();
-  // }, []);
+  useEffect(() => {
+    getPublicRooms();
+    getActiveMembers();
+  }, []);
+
+  useEffect;
 
   // fetch public rooms /rooms (server-side call with api key)
   const getPublicRooms = async () => {
@@ -149,7 +157,7 @@ export default function Chat() {
 
   return (
     <div className="flex w-full h-full">
-      {/* <LeftBar />
+      <LeftBar />
       <div className="flex flex-col items-center w-full h-full">
         <SearchBar />
         {!member ? (
@@ -192,7 +200,7 @@ export default function Chat() {
             />
           )}
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }
