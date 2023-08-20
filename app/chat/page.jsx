@@ -10,7 +10,6 @@ import { useEffect, useState } from "react";
 import SelectedMember from "../../components/chat/sections/SelectedMember";
 import { fetchDirectus } from "@/lib/directus";
 import { useRouter } from "next/navigation";
-import { Peer } from "peerjs";
 
 export default function Chat() {
   // Dès la 1e connexion,
@@ -36,13 +35,6 @@ export default function Chat() {
   const peer = usePeerStore((state) => state.peer);
   const setPeer = usePeerStore((state) => state.setPeer);
 
-  if (typeof navigator !== undefined && !peer) {
-    const initPeer = new Peer();
-    setPeer(initPeer);
-  } else {
-    console.log("peer", peer);
-  }
-
   const retrieveMember = async () => {
     const endpoint = `/items/member?filter[user_id][_eq]=${user.id}`;
     let options = {
@@ -61,6 +53,15 @@ export default function Chat() {
   };
 
   useEffect(() => {
+    import("peerjs").then(({ default: Peer }) => {
+      // normal synchronous code
+      if (!peer) {
+        const initPeer = new Peer();
+        setPeer(initPeer);
+      } else {
+        console.log("peer", peer);
+      }
+    });
     getPublicRooms();
     getActiveMembers();
   }, []);
