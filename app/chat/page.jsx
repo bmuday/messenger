@@ -35,7 +35,8 @@ export default function Chat() {
   // Create a peer
   const peer = usePeerStore((state) => state.peer);
   const setPeer = usePeerStore((state) => state.setPeer);
-  if (!peer) {
+
+  if (typeof navigator !== undefined && !peer) {
     const initPeer = new Peer();
     setPeer(initPeer);
   } else {
