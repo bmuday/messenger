@@ -39,7 +39,6 @@
     "app/login/page.jsx",
     "app/rooms/page.jsx",
     "app/members/page.jsx",
-    "hooks/fetchDirectus.js",
     "app/api/rooms/route.js",
     "app/directus.js",
     "app/error.tsx",

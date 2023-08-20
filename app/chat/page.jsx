@@ -8,7 +8,7 @@ import ChatLanding from "../../components/chat/sections/ChatLanding";
 import { useUserStore } from "../../stores";
 import { useEffect, useState } from "react";
 import SelectedMember from "../../components/chat/sections/SelectedMember";
-import fetchDirectus from "../../hooks/fetchDirectus";
+import { fetchDirectus } from "@/lib/directus";
 import { useRouter } from "next/navigation";
 import { Peer } from "peerjs";
 
