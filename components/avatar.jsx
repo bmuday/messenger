@@ -12,7 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Moon, Sun } from "lucide-react";
-import { useDarkStore, useUserStore } from "@/stores";
+import { useDarkStore, usePeerStore, useUserStore } from "@/stores";
 import { fetchDirectus } from "@/lib/directus";
 import { useRouter } from "next/navigation";
 import { deleteCookie } from "@/lib/utils";
@@ -25,6 +25,7 @@ export default function Avatar() {
   const setUser = useUserStore((state) => state.setUser);
   const setMember = useUserStore((state) => state.setMember);
   const setUserSession = useUserStore((state) => state.setUserSession);
+  const setPeer = usePeerStore((state) => state.setPeer);
   const refresh_token = useUserStore((state) => state.userSession)
     ?.refresh_token;
 
@@ -43,6 +44,7 @@ export default function Avatar() {
       setUser(null);
       setMember(null);
       setUserSession(null);
+      setPeer(null);
       deleteCookie("directus_refresh_token");
       // router.push("/login");
     } catch (error) {

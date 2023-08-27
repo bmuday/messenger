@@ -6,7 +6,7 @@ import RightBar from "../../components/chat/sections/RightBar";
 import SearchBar from "../../components/chat/sections/SearchBar";
 import ChatLanding from "../../components/chat/sections/ChatLanding";
 import { usePeerStore, useUserStore } from "../../stores";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import SelectedMember from "../../components/chat/sections/SelectedMember";
 import { fetchDirectus } from "@/lib/directus";
 import { useRouter } from "next/navigation";
@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 export default function Chat() {
   // Dès la 1e connexion,
   // faire settingsCheck et enregistrer paramètres dans le profil user
+  const [peer, setPeer] = useState(null);
   const [error, setError] = useState(null);
   const [publicRooms, setPublicRooms] = useState([]);
   const [activeMembers, setActiveMembers] = useState([]);
@@ -30,10 +31,6 @@ export default function Chat() {
   const member = useUserStore((state) => state.member);
   const setMember = useUserStore((state) => state.setMember);
   const access_token = useUserStore((state) => state.userSession)?.access_token;
-
-  // Create a peer
-  const peer = usePeerStore((state) => state.peer);
-  const setPeer = usePeerStore((state) => state.setPeer);
 
   const retrieveMember = async () => {
     const endpoint = `/items/member?filter[user_id][_eq]=${user.id}`;
@@ -52,21 +49,62 @@ export default function Chat() {
     }
   };
 
+  const updateMember = async (memberId, peer) => {
+    const endpoint = `/items/member/${memberId}`;
+    let options = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "PATCH",
+      body: JSON.stringify({ peer_id: peer }),
+    };
+    if (access_token) options.headers.Authorization = `Bearer ${access_token}`;
+    try {
+      const { data } = await fetchDirectus(endpoint, options);
+      return data;
+    } catch (error) {
+      console.log("error", error);
+      setError(error);
+    }
+  };
+
   useEffect(() => {
-    import("peerjs").then(({ default: Peer }) => {
-      // normal synchronous code
-      if (!peer) {
-        const initPeer = new Peer();
-        setPeer(initPeer);
-      } else {
-        console.log("peer", peer);
-      }
+    // public rooms
+    getPublicRooms().catch((err) => {
+      console.log("err", err);
+      setError("No public rooms");
     });
-    getPublicRooms();
-    getActiveMembers();
+
+    // active members
+    getActiveMembers().catch((err) => {
+      console.log("err", err);
+      setError("No active members");
+    });
+
+    // peer client object
+    import("peerjs").then(({ default: Peer }) => {
+      const peer = new Peer();
+      peer.on("open", (id) => {
+        setPeer(peer);
+
+        // fetch and update member
+        retrieveMember()
+          .then((member) => {
+            setMember(member[0]);
+            if (member[0].peer_id !== id) {
+              updateMember(member[0].id, id);
+              setMember({ ...member[0], peer_id: peer._id });
+            }
+          })
+          .catch((err) => {
+            console.log("err", err);
+            setError("No member");
+          });
+      });
+    });
   }, []);
 
-  useEffect;
+  console.log("peer3", peer);
 
   // fetch public rooms /rooms (server-side call with api key)
   const getPublicRooms = async () => {
@@ -123,12 +161,15 @@ export default function Chat() {
   // fetch room members, no ghost with api endpoint /presence (server-side call with api key)
   const getRoomMembers = async () => {
     try {
+      console.log("selectedRoom", selectedRoom);
       const { data } = await fetchDirectus(
         `/items/room_member?filter=[room_id][_eq]=[${selectedRoom?.id}]&fields=member_id?fields=member_id&groupBy[]=member_id`
       );
       const membersId = data?.map((m) => m.member_id);
-      const members = activeMembers.filter((m) => membersId.includes(m.id));
-      setRoomMembers(members);
+      console.log("membersId", membersId);
+      const roomMembers = activeMembers.filter((m) => membersId.includes(m.id));
+      console.log("roomMembers", roomMembers);
+      setRoomMembers(roomMembers);
     } catch (error) {
       console.log("error", error);
     }
@@ -163,11 +204,7 @@ export default function Chat() {
       <div className="flex flex-col items-center w-full h-full">
         <SearchBar />
         {!member ? (
-          <ChatLanding
-            retrieveMember={retrieveMember}
-            setMember={setMember}
-            peer={peer}
-          />
+          <ChatLanding setMember={setMember} peer={peer} />
         ) : (
           <MainBar
             member={member}

@@ -4,19 +4,14 @@ import Avatar from "./avatar";
 import { headerLinks } from "@/lib/constants";
 import classnames from "classnames";
 import CurrentUser from "./CurrentUser";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useUserStore } from "@/stores";
 
-export default function Header({ display }) {
+export default function Header() {
   const pathname = usePathname();
-  const router = useRouter();
   const displayCurrentUser = pathname === "/";
   const user = useUserStore((state) => state.user);
-  if (!display) return;
-  const handleClick = (url) => {
-    if (!user) router.push(url);
-    return;
-  };
+
   return (
     <header className="p-4 text-gray-800">
       <div className="flex items-center justify-between h-16 border-b-gray-100">
@@ -48,13 +43,9 @@ export default function Header({ display }) {
                   "font-semibold bg-violet-600 text-gray-50": l.active,
                 });
                 return (
-                  <button
-                    key={index}
-                    onClick={() => handleClick(l.url)}
-                    className={link}
-                  >
+                  <Link key={index} className={link} href={l.url}>
                     {l.label}
-                  </button>
+                  </Link>
                 );
               })}
           </div>

@@ -1,8 +1,7 @@
 import Link from "next/link";
 import { footerLinks, socialLinks } from "@/lib/constants";
 
-export default function Footer({ display }) {
-  if (!display) return;
+export default function Footer() {
   return (
     <footer className="py-8 text-gray-600 border-t-gray-100">
       <div className="flex flex-wrap items-center justify-center space-y-4 sm:justify-between sm:space-y-0">

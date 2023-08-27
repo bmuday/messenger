@@ -43,7 +43,7 @@
     "app/directus.js",
     "app/error.tsx",
     "app/page.jsx",
-    "app/load.jsx",
+    "app/loading.jsx",
     "app/layout.tsx",
     "app/app/page.jsx",
     "components/header.jsx",

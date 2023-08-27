@@ -1,11 +1,10 @@
 "use client";
-
 import { usePathname } from "next/navigation";
+import { useDarkStore } from "@/stores";
+import { leftBarLinks } from "@/lib/constants";
 import Header from "./header";
 import Footer from "./footer";
 import classnames from "classnames";
-import { useDarkStore } from "@/stores";
-import { leftBarLinks } from "@/lib/constants";
 
 export default function Body({ children }) {
   const pathname = usePathname();
@@ -18,13 +17,14 @@ export default function Body({ children }) {
     container: display,
     dark,
   });
+
   return (
     <body className={dynamic_class}>
-      <Header display={display} />
+      {display && <Header />}
       <main className="flex items-center justify-center w-full h-full">
         {children}
       </main>
-      <Footer display={display} />
+      {display && <Footer />}
     </body>
   );
 }
