@@ -1,5 +1,4 @@
 "use client";
-
 import {
   Avatar as Container,
   AvatarFallback,
@@ -12,20 +11,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Moon, Sun } from "lucide-react";
-import { useDarkStore, usePeerStore, useUserStore } from "@/stores";
+import { useDarkStore, useUserStore, usePeerStore } from "@/stores";
 import { fetchDirectus } from "@/lib/directus";
-import { useRouter } from "next/navigation";
 import { deleteCookie } from "@/lib/utils";
 
 export default function Avatar() {
   const isPremium = false;
-  const router = useRouter();
   const dark = useDarkStore((state) => state.dark);
   const setDark = useDarkStore((state) => state.changeMode);
+  const setPeer = usePeerStore((state) => state.setPeer);
   const setUser = useUserStore((state) => state.setUser);
   const setMember = useUserStore((state) => state.setMember);
   const setUserSession = useUserStore((state) => state.setUserSession);
-  const setPeer = usePeerStore((state) => state.setPeer);
   const refresh_token = useUserStore((state) => state.userSession)
     ?.refresh_token;
 
@@ -41,10 +38,10 @@ export default function Avatar() {
 
     try {
       await fetchDirectus(endpoint, options);
+      setPeer(null);
       setUser(null);
       setMember(null);
       setUserSession(null);
-      setPeer(null);
       deleteCookie("directus_refresh_token");
       // router.push("/login");
     } catch (error) {

@@ -4,7 +4,7 @@ import { fetchDirectus } from "@/lib/directus";
 import { useUserStore } from "@/stores";
 import { useState, useEffect } from "react";
 
-export default function ChatLanding({ setMember, peer }) {
+export default function ChatLanding({ setMember, peerId }) {
   const [pseudo, setPseudo] = useState("");
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
@@ -12,10 +12,9 @@ export default function ChatLanding({ setMember, peer }) {
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
   const user = useUserStore((state) => state.user);
-  const member = useUserStore((state) => state.member);
   const access_token = useUserStore((state) => state.userSession)?.access_token;
 
-  console.log("peer2", peer);
+  console.log("peer2", peerId);
   const createMember = async (e) => {
     e.preventDefault();
 
@@ -31,7 +30,7 @@ export default function ChatLanding({ setMember, peer }) {
         age,
         gender,
         location,
-        peer_id: peer._id,
+        peer_id: peerId,
         subscription: "standard",
       }),
     };
@@ -45,7 +44,6 @@ export default function ChatLanding({ setMember, peer }) {
       setError(error);
     }
   };
-
   return (
     <div className="w-full max-w-md p-8 space-y-3 text-gray-800 rounded-xl bg-gray-50">
       <form onSubmit={createMember} className="space-y-6">
