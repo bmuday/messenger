@@ -1,0 +1,35 @@
+.sidebarContainer {
+  width: 5%;
+  padding: 5px;
+  border-right: 1px solid lightgray;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.linksContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.link,
+.button {
+  margin: 10px auto;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.link:hover,
+.button:hover {
+  background-color: lightgray;
+  transform: scale(1.1);
+}
+
+.avatarContainer {
+}
+
+.avatarImage {
+  border-radius: 50%;
+}

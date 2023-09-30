@@ -5,7 +5,13 @@ import {
   Instagram,
   Facebook,
   Twitter,
+  UserPlus2,
 } from "lucide-react";
+
+export const icons = {
+  sideBarIcons: [<LogOut />, <MessageSquare />, <Users />],
+  leftBarIcons: [<UserPlus2 />],
+};
 
 export const headerLinks = [
   { label: "Rooms", url: "/rooms", active: false },
@@ -21,7 +27,7 @@ export const footerLinks = [
 
 export const sideBarLinks = [
   { label: "Messages", url: "/messages", icon: <MessageSquare /> },
-  { label: "Users", url: "/users", icon: <Users /> },
+  { label: "Rooms", url: "/rooms", icon: <Users /> },
   { label: "Logout", icon: <LogOut /> },
 ];
 

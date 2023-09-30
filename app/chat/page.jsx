@@ -4,7 +4,7 @@ import MainBar from "../(components)/MainBar";
 
 export default function Chat() {
   return (
-    <div className="flex flex-auto w-full">
+    <div className="chat">
       <SideBar />
       <LeftBar />
       <MainBar />
