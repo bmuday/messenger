@@ -15,8 +15,8 @@ export default function MessageCard() {
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
       </div>
-      <p>Hello</p>
-      <p>11:53</p>
+      <p className={styles.lastMessage}>Hello</p>
+      <p className={styles.date}>11:53</p>
     </div>
   );
 }
