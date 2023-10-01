@@ -1,6 +1,5 @@
 .leftbarContainer {
-  width: 30%;
-  max-height: 70vw;
+  width: 300px;
   border-right: 1px solid lightgray;
   overflow-y: scroll;
 }
@@ -16,7 +15,5 @@
   padding: 5px;
   border-radius: 50%;
   background-color: lightgray;
-}
-
-.messagesList {
+  cursor: pointer;
 }

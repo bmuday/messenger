@@ -6,7 +6,7 @@ export default function Hero() {
     <section className={styles.hero}>
       <div></div>
       <div></div>
-      <Link href="/chat" className={styles.heroButton}>
+      <Link href="/rooms" className={styles.heroButton}>
         Go to chat
       </Link>
     </section>

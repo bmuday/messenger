@@ -5,7 +5,27 @@
   padding: 10px auto;
 }
 
-.img {
+.logo {
+}
+
+.sessionContainer {
+  display: flex;
+  width: 200px;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.chatLinkButton {
+  background: lightseagreen;
+  color: #fff;
+  border: none;
+  width: 100px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.chatLinkButton:hover {
+  transform: scale(1.05);
 }
 
 .links {
@@ -16,4 +36,12 @@
 
 .link {
   margin: 0 10px;
+}
+
+.avatarImage {
+  border-radius: 50%;
+}
+
+.dropdownMenu {
+  border: none;
 }

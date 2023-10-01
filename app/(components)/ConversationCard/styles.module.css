@@ -1,0 +1,22 @@
+.card {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 20px auto;
+  padding: 0 10px;
+  border-bottom: 1px solid lightgray;
+  cursor: pointer;
+}
+
+.avatarImage {
+  border-radius: 50%;
+}
+
+.lastMessage {
+  width: 70%;
+  padding: 0 10px;
+}
+
+.date {
+  width: 15%;
+}

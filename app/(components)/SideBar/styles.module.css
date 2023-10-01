@@ -1,6 +1,6 @@
 .sidebarContainer {
-  width: 5%;
-  padding: 5px;
+  width: 30px;
+  padding: 10px;
   border-right: 1px solid lightgray;
   display: flex;
   flex-direction: column;
@@ -19,15 +19,19 @@
   padding: 5px;
   border-radius: 5px;
   cursor: pointer;
+  color: black;
 }
 
 .link:hover,
-.button:hover {
+.button:hover,
+.avatarImage:hover {
   background-color: lightgray;
   transform: scale(1.1);
 }
 
-.avatarContainer {
+.button {
+  background-color: transparent;
+  border: none;
 }
 
 .avatarImage {

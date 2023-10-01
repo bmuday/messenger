@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { sideBarLinks } from "../../(lib)/constants";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import styles from "./styles.module.css";
+import { LogOut } from "lucide-react";
 
 export default function SideBar() {
   return (
@@ -14,26 +14,11 @@ export default function SideBar() {
                 {l.icon}
               </Link>
             );
-          return (
-            <button key={l.label} className={styles.button}>
-              {l.icon}
-            </button>
-          );
         })}
       </div>
-      <div className={styles.avatarContainer}>
-        <Link href="/profile">
-          <Avatar>
-            <AvatarImage
-              src="https://github.com/shadcn.png"
-              width={50}
-              height={50}
-              className={styles.avatarImage}
-            />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-        </Link>
-      </div>
+      <Link href="/" className={styles.button}>
+        <LogOut />
+      </Link>
     </div>
   );
 }

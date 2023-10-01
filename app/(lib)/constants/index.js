@@ -1,17 +1,17 @@
 import {
-  LogOut,
   MessageSquare,
   Users,
+  Search,
   Instagram,
   Facebook,
   Twitter,
   UserPlus2,
 } from "lucide-react";
 
-export const icons = {
-  sideBarIcons: [<LogOut />, <MessageSquare />, <Users />],
-  leftBarIcons: [<UserPlus2 />],
-};
+// export const icons = {
+//   sideBarIcons: { logout: <LogOut />, message: MessageSquare, users: Users },
+//   leftBarIcons: { createGroup: UserPlus2 },
+// };
 
 export const headerLinks = [
   { label: "Rooms", url: "/rooms", active: false },
@@ -28,7 +28,8 @@ export const footerLinks = [
 export const sideBarLinks = [
   { label: "Messages", url: "/messages", icon: <MessageSquare /> },
   { label: "Rooms", url: "/rooms", icon: <Users /> },
-  { label: "Logout", icon: <LogOut /> },
+  { label: "Search", url: "/search", icon: <Search /> },
+  // { label: "Logout", icon: <LogOut /> },
 ];
 
 // export const leftBarLinks = [

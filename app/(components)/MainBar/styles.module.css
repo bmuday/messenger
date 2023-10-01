@@ -1,5 +1,7 @@
 .mainbarContainer {
-  width: 65%;
+  width: 100%;
+  padding: 10px;
+  max-height: 100vw;
 }
 
 .noMessageContainer {

@@ -1,22 +1,20 @@
+"use client";
 import styles from "./styles.module.css";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { useSessionStore } from "@/app/(stores)";
 
-export default function MessageCard() {
+export default function MessageCard({ message }) {
+  // Retrieve user
+  const { user } = useSessionStore((state) => state);
+  // Retrieve message
+  const { content, author, sentAt } = message;
+
+  if (author === user?.id) {
+  } else {
+  }
+
   return (
     <div className={styles.card}>
-      <div>
-        <Avatar>
-          <AvatarImage
-            src="https://github.com/shadcn.png"
-            width={50}
-            height={50}
-            className={styles.avatarImage}
-          />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
-      </div>
-      <p className={styles.lastMessage}>Hello</p>
-      <p className={styles.date}>11:53</p>
+      {content} {sentAt}
     </div>
   );
 }

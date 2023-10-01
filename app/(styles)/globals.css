@@ -3,10 +3,8 @@
 @tailwind utilities;
 
 html,
-body,
-:root {
-  height: 100vw;
-  max-height: 100%;
+body {
+  height: 99%;
 }
 
 body {
@@ -25,6 +23,5 @@ body {
 /* Chat */
 .chat {
   display: flex;
-  height: 80%;
-  max-height: 1000px;
+  height: 100%;
 }
