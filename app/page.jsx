@@ -1,7 +1,13 @@
+"use client";
+import { useSessionStore } from "@/stores";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+  const { session } = useSessionStore((state) => state);
+  if (session) router.push("/feed");
   return (
     <section className="text-gray-800">
       <div className="container flex justify-center p-6 sm:py-12 lg:py-18 ">

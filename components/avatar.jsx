@@ -11,14 +11,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Moon, Sun } from "lucide-react";
-import { useDarkStore, useUserStore } from "@/stores";
-import { supabase } from "@/supabase";
+import { useDarkStore, useSessionStore } from "@/stores";
+import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 
 export default function Avatar() {
   const router = useRouter();
   const isPremium = false;
-  const { setUser, setSession } = useUserStore((state) => state);
+  const { setSession } = useSessionStore((state) => state);
   const { dark, setDark } = useDarkStore((state) => state);
 
   const handleLogout = async () => {
@@ -28,7 +28,6 @@ export default function Avatar() {
       console.log("error", error);
     } else {
       setSession(null);
-      setUser(null);
       router.push("/login");
     }
   };

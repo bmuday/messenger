@@ -46,8 +46,8 @@
     "app/loading.jsx",
     "app/layout.tsx",
     "app/app/page.jsx",
-    "components/header.jsx",
-    "components/footer.jsx",
+    "components/Header.jsx",
+    "components/Footer.jsx",
     "lib/directus.js",
     "components/avatar.jsx"
   ],

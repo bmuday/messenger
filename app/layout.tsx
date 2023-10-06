@@ -1,6 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import Body from "../components/Body";
+import Body from "./Body";
 
 export const metadata: Metadata = {
   title: "Chat App",
@@ -14,7 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <Body>{children}</Body>
+      <Body children={children} />
     </html>
   );
 }
