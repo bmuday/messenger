@@ -2,10 +2,10 @@ import { devtools, persist } from "zustand/middleware";
 
 let userStore = (set) => ({
   user: null,
-  userSession: null,
+  session: null,
   member: null,
   setUser: (user) => set(() => ({ user })),
-  setUserSession: (userSession) => set(() => ({ userSession })),
+  setSession: (session) => set(() => ({ session })),
   setMember: (member) => set(() => ({ member })),
 });
 

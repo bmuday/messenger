@@ -4,16 +4,13 @@ import Avatar from "./avatar";
 import { headerLinks } from "@/lib/constants";
 import classnames from "classnames";
 import CurrentUser from "./CurrentUser";
-import { usePathname } from "next/navigation";
 import { useUserStore } from "@/stores";
 
 export default function Header() {
-  const pathname = usePathname();
-  const displayCurrentUser = pathname === "/";
-  const user = useUserStore((state) => state.user);
+  const { user } = useUserStore((state) => state);
 
   return (
-    <header className="p-4 text-gray-800">
+    <header className="py-4 text-gray-800">
       <div className="flex items-center justify-between h-16 border-b-gray-100">
         <Link
           rel="noopener noreferrer"
@@ -32,25 +29,29 @@ export default function Header() {
           </svg>
         </Link>
 
-        {displayCurrentUser && <CurrentUser />}
-
-        <div className="flex">
-          <div className="flex items-center flex-shrink-0 mr-5 md:flex">
-            {!user &&
-              headerLinks.map((l, index) => {
-                const link = classnames({
-                  "self-center px-8 py-3 rounded": true,
-                  "font-semibold bg-violet-600 text-gray-50": l.active,
-                });
-                return (
-                  <Link key={index} className={link} href={l.url}>
-                    {l.label}
-                  </Link>
-                );
-              })}
+        {user ? (
+          <>
+            <CurrentUser />
+            <Avatar />
+          </>
+        ) : (
+          <div className="flex">
+            <div className="flex items-center flex-shrink-0 mr-5 md:flex">
+              {!user &&
+                headerLinks.map((l, index) => {
+                  const link = classnames({
+                    "self-center px-8 py-3 rounded": true,
+                    "font-semibold bg-violet-600 text-gray-50": l.active,
+                  });
+                  return (
+                    <button key={index} className={link}>
+                      {l.label}
+                    </button>
+                  );
+                })}
+            </div>
           </div>
-          {user && <Avatar />}
-        </div>
+        )}
       </div>
     </header>
   );

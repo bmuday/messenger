@@ -13,7 +13,7 @@ export default function Home() {
             <br className="hidden md:inline lg:hidden" />
           </p>
           <div className="flex flex-col space-y-4 sm:items-center sm:justify-center sm:flex-row sm:space-y-0 sm:space-x-4 lg:justify-start">
-            <Link rel="noopener noreferrer" href="/posts">
+            <Link rel="noopener noreferrer" href="/rooms">
               <button className="px-5 py-3 text-lg font-semibold rounded bg-violet-600 text-gray-50">
                 Go to app
               </button>

@@ -1,13 +1,15 @@
 "use client";
+
 import { useUserStore } from "@/stores";
 
 export default function CurrentUser() {
-  const user = useUserStore((state) => state.user);
-
+  const { user } = useUserStore((state) => state);
   if (!user) return null;
   return (
     <div>
-      Hello {user.first_name} {user.last_name}
+      <p>
+        Hello <span>{user?.email}</span>
+      </p>
     </div>
   );
 }

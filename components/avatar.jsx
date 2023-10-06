@@ -11,45 +11,26 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Moon, Sun } from "lucide-react";
-import { useDarkStore, useUserStore, usePeerStore } from "@/stores";
-import { fetchDirectus } from "@/lib/directus";
-import { deleteCookie } from "@/lib/utils";
+import { useDarkStore, useUserStore } from "@/stores";
+import { supabase } from "@/supabase";
+import { useRouter } from "next/navigation";
 
 export default function Avatar() {
+  const router = useRouter();
   const isPremium = false;
-  const dark = useDarkStore((state) => state.dark);
-  const setDark = useDarkStore((state) => state.changeMode);
-  const setPeer = usePeerStore((state) => state.setPeer);
-  const setUser = useUserStore((state) => state.setUser);
-  const setMember = useUserStore((state) => state.setMember);
-  const setUserSession = useUserStore((state) => state.setUserSession);
-  const refresh_token = useUserStore((state) => state.userSession)
-    ?.refresh_token;
+  const { setUser, setSession } = useUserStore((state) => state);
+  const { dark, setDark } = useDarkStore((state) => state);
 
   const handleLogout = async () => {
-    const endpoint = "/auth/logout";
-    const options = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    options.method = "POST";
-    if (refresh_token) options.body = JSON.stringify({ refresh_token });
+    const { error } = await supabase.auth.signOut();
 
-    try {
-      await fetchDirectus(endpoint, options);
-      setPeer(null);
-      setUser(null);
-      setMember(null);
-      setUserSession(null);
-      deleteCookie("directus_refresh_token");
-      // router.push("/login");
-    } catch (error) {
+    if (error) {
       console.log("error", error);
+    } else {
+      setSession(null);
+      setUser(null);
+      router.push("/login");
     }
-
-    // const logout = await res.json();
-    // console.log("logout", logout);
   };
   return (
     <DropdownMenu>

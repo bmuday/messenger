@@ -3,11 +3,9 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useUserStore } from "@/stores";
 import { logIcons } from "@/lib/constants";
-import { fetchDirectus } from "@/lib/directus";
-import { getCurrentUser } from "@/lib/utils";
-import { setCookie } from "@/lib/utils";
+import { supabase } from "@/supabase";
+import { useUserStore } from "@/stores";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -15,43 +13,26 @@ export default function LoginForm() {
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
-  const setUser = useUserStore((state) => state.setUser);
-  const setUserSession = useUserStore((state) => state.setUserSession);
-  const refresh_token = useUserStore((state) => state.userSession)
-    ?.refresh_token;
+  const { setUser, setSession } = useUserStore((state) => state);
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    const endpoint = "/auth/login";
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    };
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-    try {
-      const { data: userSession } = await fetchDirectus(endpoint, options);
-      setUserSession(userSession);
-      let user;
-      console.log("refresh_token1", userSession.refresh_token);
-      setCookie("directus_refresh_token", userSession.refresh_token, 1);
-      user = await getCurrentUser(userSession.access_token);
-      setUser(user);
+    if (data) {
       setSuccess("Connexion...");
+      setUser(data.user);
+      setSession(data.session);
       setTimeout(() => {
         setSuccess("");
         router.push("/");
       }, 1000);
-    } catch (error) {
-      if (error.message.includes("Invalid")) {
-        setError("Wrong email or password.");
-      } else {
-        setError(error.message);
-      }
     }
+    if (error) setError(error.message);
   };
   return (
     <div className="w-full max-w-md p-8 space-y-3 text-gray-800 rounded-xl bg-gray-50">

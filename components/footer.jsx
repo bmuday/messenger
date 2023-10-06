@@ -3,7 +3,7 @@ import { footerLinks, socialLinks } from "@/lib/constants";
 
 export default function Footer() {
   return (
-    <footer className="py-8 text-gray-600 border-t-gray-100">
+    <footer className="py-4 text-gray-600 border-t-gray-100">
       <div className="flex flex-wrap items-center justify-center space-y-4 sm:justify-between sm:space-y-0">
         <div className="flex flex-row pr-3 space-x-4 sm:space-x-8">
           <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 rounded-full bg-violet-600">
